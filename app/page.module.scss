@@ -1,0 +1,6 @@
+@import './typography.scss';
+
+.text {
+    color: red;
+@include Heading-L;
+}
