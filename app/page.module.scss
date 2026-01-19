@@ -1,4 +1,4 @@
-@import './typography.scss';
+@use './typography' as *;
 
 .text {
     color: red;
