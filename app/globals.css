@@ -8,8 +8,8 @@
   --color-07: #7E88C3;
   --color-08: #0C0E16;
   --color-09: #EC5757;
-  --color-10: #F8F8FB;
-  --color-11: #7C5DFA;
+  --color-10: #9277FF;
+  --color-11: #F8F8FB;
   --color-12: #141625;
   
 }
@@ -24,6 +24,8 @@ body {
 body {
   font-family: "League Spartan", sans-serif;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-11);
+  columns: var(--color-08);
 
 }
 
