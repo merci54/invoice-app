@@ -39,3 +39,22 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}

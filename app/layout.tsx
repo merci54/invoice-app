@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { League_Spartan } from 'next/font/google';
-import './globals.css';
+import './globals.scss';
 import 'modern-normalize';
 import Header from '@/components/Header/Header';
 
@@ -21,8 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Header />
-      <body className={spartan.variable}>{children}</body>
+      <body className={spartan.variable}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
