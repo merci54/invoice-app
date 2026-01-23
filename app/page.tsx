@@ -34,9 +34,83 @@ export default function Home() {
           </div>
 
           <ul className={css.invoices__list}>
-            <li>#rt3080</li>
-            <li>#rt3080</li>
-            <li>#rt3080</li>
+            <li className={css.invoice}>
+              <div className={css.invoice__top}>
+                <h2 className={css.invoice__id}>#RT3080</h2>
+                <p className={css.invoice__name}>Jensen Huang</p>
+              </div>
+              <div className={css.invoice__low}>
+                <div className={css.amount}>
+                  <p className={css.amount__date}>Due  19 Aug 2026</p>
+                  <p className={css.amount__sum}>
+                    £ 1,800.90
+                  </p>
+
+                </div>
+                <div className={css.status}>
+                  <Image className={css.status__icon} alt='status icon' width={8} height={8} src={'/status.svg'} />
+                  <span className={css.status__text}>Paid</span>
+                </div>
+              </div>
+            </li>
+            <li className={css.invoice}>
+              <div className={css.invoice__top}>
+                <h2 className={css.invoice__id}>#RT3080</h2>
+                <p className={css.invoice__name}>Jensen Huang</p>
+              </div>
+              <div className={css.invoice__low}>
+                <div className={css.amount}>
+                  <p className={css.amount__date}>Due  19 Aug 2026</p>
+                  <p className={css.amount__sum}>
+                    £ 1,800.90
+                  </p>
+
+                </div>
+                <div className={css.status}>
+                  <Image className={css.status__icon} alt='status icon' width={8} height={8} src={'/status.svg'} />
+                  <span className={css.status__text}>Paid</span>
+                </div>
+              </div>
+            </li>
+            <li className={css.invoice}>
+              <div className={css.invoice__top}>
+                <h2 className={css.invoice__id}>#RT3080</h2>
+                <p className={css.invoice__name}>Jensen Huang</p>
+              </div>
+              <div className={css.invoice__low}>
+                <div className={css.amount}>
+                  <p className={css.amount__date}>Due  19 Aug 2026</p>
+                  <p className={css.amount__sum}>
+                    £ 1,800.90
+                  </p>
+
+                </div>
+                <div className={css.status}>
+                  <Image className={css.status__icon} alt='status icon' width={8} height={8} src={'/status.svg'} />
+                  <span className={css.status__text}>Paid</span>
+                </div>
+              </div>
+            </li>
+            <li className={css.invoice}>
+              <div className={css.invoice__top}>
+                <h2 className={css.invoice__id}>#RT3080</h2>
+                <p className={css.invoice__name}>Jensen Huang</p>
+              </div>
+              <div className={css.invoice__low}>
+                <div className={css.amount}>
+                  <p className={css.amount__date}>Due  19 Aug 2026</p>
+                  <p className={css.amount__sum}>
+                    £ 1,800.90
+                  </p>
+
+                </div>
+                <div className={css.status}>
+                  <Image className={css.status__icon} alt='status icon' width={8} height={8} src={'/status.svg'} />
+                  <span className={css.status__text}>Paid</span>
+                </div>
+              </div>
+            </li>
+           
           </ul>
         </div>
       </Container>

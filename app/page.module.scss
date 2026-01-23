@@ -35,6 +35,14 @@
         align-items: center;
         gap: 18.54px;
     }
+
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+    }
 }
 
 .filter {
@@ -77,4 +85,71 @@
 
        
     }
+}
+
+.invoice {
+    background-color: #fff;
+    padding: 25px 24px;
+    border-radius: 8px;
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 24px;
+    }
+
+    &__id {
+        @include Heading-S-2
+    }
+
+    &__name {
+        @include Body-2;
+        color: #858BB2;
+    }
+
+    &__low {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+}
+
+.amount {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    &__date {
+        color: var(--color-06);
+        @include Body-2;
+    }
+
+    &__sum {
+        @include Heading-S-2;
+    }
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 30px;
+    background-color: rgba(51, 214, 159, 0.06);
+    
+    
+
+   
+ 
+    border-radius: 6px;
+   
+
+    &__text {
+        color: #33D69F;
+        @include Heading-S-2;
+        
+    }
+    
 }
