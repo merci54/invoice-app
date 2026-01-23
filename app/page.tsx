@@ -6,32 +6,34 @@ export default function Home() {
   return (
     <main className={css.main}>
       <Container>
-        <div className={css.wrapper}>
-          <div className={css.settingsBlock}>
-            <div className={css.settingsBlock__textBlock}>
-              <h1 className={css.settingsBlock__title}>Invoices</h1>
-              <p className={css.settingsBlock__total}>7 invoices</p>
+        <div className={css.invoices}>
+          <div className={css.invoices__top}>
+            <div className={css.invoices__info}>
+              <h1 className={css.invoices__title}>Invoices</h1>
+              <p className={css.invoices__count}>7 invoices</p>
             </div>
-            <div className={css.featuresBlock}>
-              <div className={css.featuresBlock__filters}>
-                <p className={css.featuresBlock__filterText}>Filter</p>
+
+            <div className={css.invoices__actions}>
+              <button className={css.filter}>
+                <p className={css.filter__text}>Filter</p>
                 <Image
-                  className={css.downArrow}
+                  className={css.filter__icon}
                   src={'/down.svg'}
                   alt="down icon"
-                  width={8.46}
-                  height={4.23}
+                  width={10}
+                  height={10}
                 />
-              </div>
-              <button className={css.featuresBlock__button}>
-                <div className={css.featuresBlock__plus}>
+              </button>
+              <button className={css.newInvoice}>
+                <div className={css.newInvoice__icon}>
                   <Image src={'/plus.svg'} alt="plus icon" width={10} height={10} />
                 </div>
                 New
               </button>
             </div>
           </div>
-          <ul className={css.settingsBlock__list}>
+
+          <ul className={css.invoices__list}>
             <li>#rt3080</li>
             <li>#rt3080</li>
             <li>#rt3080</li>
