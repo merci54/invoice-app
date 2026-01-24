@@ -1,0 +1,23 @@
+@use '@/app/typography' as *;
+
+.wrapper {
+    text-align: center;
+    margin-top: 102px;
+}
+
+.image {
+    margin: 0 auto;
+    margin-bottom: 42px;
+}
+.title {
+    @include Heading-M;
+    margin-bottom: 23px;
+}
+
+.text {
+    color: var(--color-06);
+    @include Body-2;
+
+    max-width: 176px;
+    margin: 0 auto;
+}
