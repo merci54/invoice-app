@@ -5,10 +5,7 @@
 }
 
 .invoices {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-
+   
     &__top {
         display: flex;
         justify-content: space-between;
@@ -54,6 +51,7 @@
     cursor: pointer;
 
     &__text {
+        color: var(--color-08);
         @include Heading-S-2;
     }
 }

@@ -1,8 +1,11 @@
 import Container from '@/components/Container/Container';
 import css from './page.module.scss';
 import Image from 'next/image';
+import NothingPage from '@/components/NothingPage/NothingPage';
+import InvoicesList from '@/components/InvoicesList/InvoicesList';
 
 export default function Home() {
+
   return (
     <main className={css.main}>
       <Container>
@@ -33,85 +36,8 @@ export default function Home() {
             </div>
           </div>
 
-          <ul className={css.invoices__list}>
-            <li className={css.invoice}>
-              <div className={css.invoice__top}>
-                <h2 className={css.invoice__id}>#RT3080</h2>
-                <p className={css.invoice__name}>Jensen Huang</p>
-              </div>
-              <div className={css.invoice__low}>
-                <div className={css.amount}>
-                  <p className={css.amount__date}>Due  19 Aug 2026</p>
-                  <p className={css.amount__sum}>
-                    £ 1,800.90
-                  </p>
-
-                </div>
-                <div className={css.status}>
-                  <Image className={css.status__icon} alt='status icon' width={8} height={8} src={'/status.svg'} />
-                  <span className={css.status__text}>Paid</span>
-                </div>
-              </div>
-            </li>
-            <li className={css.invoice}>
-              <div className={css.invoice__top}>
-                <h2 className={css.invoice__id}>#RT3080</h2>
-                <p className={css.invoice__name}>Jensen Huang</p>
-              </div>
-              <div className={css.invoice__low}>
-                <div className={css.amount}>
-                  <p className={css.amount__date}>Due  19 Aug 2026</p>
-                  <p className={css.amount__sum}>
-                    £ 1,800.90
-                  </p>
-
-                </div>
-                <div className={css.status}>
-                  <Image className={css.status__icon} alt='status icon' width={8} height={8} src={'/status.svg'} />
-                  <span className={css.status__text}>Paid</span>
-                </div>
-              </div>
-            </li>
-            <li className={css.invoice}>
-              <div className={css.invoice__top}>
-                <h2 className={css.invoice__id}>#RT3080</h2>
-                <p className={css.invoice__name}>Jensen Huang</p>
-              </div>
-              <div className={css.invoice__low}>
-                <div className={css.amount}>
-                  <p className={css.amount__date}>Due  19 Aug 2026</p>
-                  <p className={css.amount__sum}>
-                    £ 1,800.90
-                  </p>
-
-                </div>
-                <div className={css.status}>
-                  <Image className={css.status__icon} alt='status icon' width={8} height={8} src={'/status.svg'} />
-                  <span className={css.status__text}>Paid</span>
-                </div>
-              </div>
-            </li>
-            <li className={css.invoice}>
-              <div className={css.invoice__top}>
-                <h2 className={css.invoice__id}>#RT3080</h2>
-                <p className={css.invoice__name}>Jensen Huang</p>
-              </div>
-              <div className={css.invoice__low}>
-                <div className={css.amount}>
-                  <p className={css.amount__date}>Due  19 Aug 2026</p>
-                  <p className={css.amount__sum}>
-                    £ 1,800.90
-                  </p>
-
-                </div>
-                <div className={css.status}>
-                  <Image className={css.status__icon} alt='status icon' width={8} height={8} src={'/status.svg'} />
-                  <span className={css.status__text}>Paid</span>
-                </div>
-              </div>
-            </li>
-           
-          </ul>
+          <InvoicesList />
+          {/* <NothingPage /> */}
         </div>
       </Container>
     </main>

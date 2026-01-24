@@ -1,0 +1,79 @@
+@use '@/app/typography' as *;
+
+.invoice {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    background-color: #fff;
+    padding: 25px 24px;
+    border-radius: 8px;
+    min-height: 134px;
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__id {
+        @include Heading-S-2;
+    }
+
+    &__hash {
+        color: var(--color-07)
+    }
+
+    &__name {
+        @include Body-2;
+        color: #858BB2;
+    }
+
+    &__low {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+}
+
+.amount {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    &__date {
+        color: var(--color-06);
+        @include Body-2;
+    }
+
+    &__sum {
+        @include Heading-S-2;
+    }
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 30px;
+    
+    @include Heading-S-2;
+    border-radius: 6px;
+   
+    &__paid {
+        background-color: var(--green-bg);
+         color: var(--green);
+    }
+
+    &__pending {
+        background-color: var(--orange-bg);
+        color: var(--orange);
+    }
+
+    &__draft {
+        background-color: var(--black-bg);
+        color: var(--black);
+    }
+    
+}
