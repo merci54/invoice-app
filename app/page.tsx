@@ -1,7 +1,6 @@
 import Container from '@/components/Container/Container';
 import css from './page.module.scss';
 import Image from 'next/image';
-import NothingPage from '@/components/NothingPage/NothingPage';
 import InvoicesList from '@/components/InvoicesList/InvoicesList';
 
 export default function Home() {
@@ -21,7 +20,7 @@ export default function Home() {
                 <p className={css.filter__text}>Filter</p>
                 <Image
                   className={css.filter__icon}
-                  src={'/down.svg'}
+                  src={'/icons/down.svg'}
                   alt="down icon"
                   width={10}
                   height={10}
@@ -29,7 +28,7 @@ export default function Home() {
               </button>
               <button className={css.newInvoice}>
                 <div className={css.newInvoice__icon}>
-                  <Image src={'/plus.svg'} alt="plus icon" width={10} height={10} />
+                  <Image src={'/icons/plus.svg'} alt="plus icon" width={10} height={10} />
                 </div>
                 New
               </button>

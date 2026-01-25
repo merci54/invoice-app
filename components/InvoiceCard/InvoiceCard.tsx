@@ -1,9 +1,9 @@
-import { InvoiceProps } from '@/types/invoice';
+import { InvoiceCardProps } from '@/types/invoice';
 import css from './InvoiceCard.module.scss';
 
 
 
-export default function InvoiceCard({id, name, date, sum, status}: InvoiceProps) {
+export default function InvoiceCard({id, name, date, sum, status}: InvoiceCardProps) {
     return <li className={css.invoice}>
               <div className={css.invoice__top}>
                 <h2 className={css.invoice__id}><span className={css.invoice__hash}>#</span>{id}</h2>
