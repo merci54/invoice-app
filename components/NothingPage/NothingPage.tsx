@@ -3,7 +3,7 @@ import css from './NothingPage.module.scss';
 
 export default function NothingPage() {
     return <div className={css.wrapper}>
-        <Image className={css.image} src={'/nothing.svg'} alt='Image nothing' width={193} height={160} />
+        <Image className={css.image} src={'/images/nothing.svg'} alt='Image nothing' width={193} height={160} />
         <div className={css.textBlock}>
             <h2 className={css.title}>
                 There is nothing here

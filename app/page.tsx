@@ -2,8 +2,33 @@ import Container from '@/components/Container/Container';
 import css from './page.module.scss';
 import Image from 'next/image';
 import InvoicesList from '@/components/InvoicesList/InvoicesList';
+import { connectMongoDB } from '@/lib/db/connectMongoDB';
+import { Invoice } from '@/lib/models/invoice';
+import NothingPage from '@/components/NothingPage/NothingPage';
+import { Invoice as InvoiceDB } from '@/types/invoice';
 
-export default function Home() {
+function mapInvoiceToCard(invoice: InvoiceDB) {
+  return {
+    id: invoice.invoiceNumber,
+    name: invoice.clientName,
+    date: `Due ${new Date(invoice.invoiceDate).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    })}`,
+    sum: invoice.totalAmount,
+    status: invoice.status,
+  };
+}
+
+
+export default async function Home() {
+
+    await connectMongoDB();
+
+    const invoices = await Invoice.find().lean<InvoiceDB[]>();
+  const cards = invoices.map(mapInvoiceToCard);
+   const hasInvoices = cards.length > 0;
 
   return (
     <main className={css.main}>
@@ -12,7 +37,7 @@ export default function Home() {
           <div className={css.invoices__top}>
             <div className={css.invoices__info}>
               <h1 className={css.invoices__title}>Invoices</h1>
-              <p className={css.invoices__count}>7 invoices</p>
+              <p className={css.invoices__count}>{cards.length > 0 ? cards.length : 'No'} {cards.length === 1 ? 'Invoice' : 'Invoices'}</p>
             </div>
 
             <div className={css.invoices__actions}>
@@ -35,8 +60,12 @@ export default function Home() {
             </div>
           </div>
 
-          <InvoicesList />
-          {/* <NothingPage /> */}
+          
+           {hasInvoices ? (
+            <InvoicesList invoices={cards} />
+          ) : (
+            <NothingPage />
+          )}
         </div>
       </Container>
     </main>

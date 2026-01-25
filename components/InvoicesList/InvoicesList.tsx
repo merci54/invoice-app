@@ -1,32 +1,17 @@
-import css from './InvoicesList.module.scss';
-import InvoiceCard from '../InvoiceCard/InvoiceCard';
-import { Invoice as InvoiceDB } from '@/types/invoice';
-import { connectMongoDB } from '@/lib/db/connectMongoDB';
-import { Invoice } from '@/lib/models/invoice';
+import css from "./InvoicesList.module.scss";
+import InvoiceCard from "../InvoiceCard/InvoiceCard";
+import { InvoiceCardProps } from "@/types/invoice";
 
-
-function mapInvoiceToCard(invoice: InvoiceDB) {
-  return {
-    id: invoice.invoiceNumber,
-    name: invoice.clientName,
-    date: `Due ${new Date(invoice.invoiceDate).toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    })}`,
-    sum: invoice.totalAmount,
-    status: invoice.status,
-  };
+interface Props {
+  invoices: InvoiceCardProps[];
 }
 
-export default async function InvoicesList() {
-    await connectMongoDB();
-    const invoices = await Invoice.find().lean<InvoiceDB[]>();
-    const cards = invoices.map(mapInvoiceToCard);
-
-    return <ul className={css.list}>
-      {cards.map((invoice) => (
+export default function InvoicesList({ invoices }: Props) {
+  return (
+    <ul className={css.list}>
+      {invoices.map((invoice) => (
         <InvoiceCard key={invoice.id} {...invoice} />
       ))}
     </ul>
+  );
 }
