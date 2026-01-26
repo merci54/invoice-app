@@ -54,6 +54,12 @@
         color: var(--color-08);
         @include Heading-S-2;
     }
+
+    &:hover {
+        .filter__icon path {
+            stroke: var(--color-02);
+        }
+  }
 }
 
 .newInvoice {
@@ -81,7 +87,10 @@
         background-color: #fff;
         border-radius: 50%;
 
-       
+    }
+
+    &:hover {
+        background-color: var(--color-02);
     }
 }
 
@@ -136,14 +145,9 @@
     gap: 8px;
     padding: 14px 30px;
     background-color: rgba(51, 214, 159, 0.06);
-    
-    
 
-   
- 
     border-radius: 6px;
    
-
     &__text {
         color: #33D69F;
         @include Heading-S-2;

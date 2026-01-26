@@ -43,13 +43,10 @@ export default async function Home() {
             <div className={css.invoices__actions}>
               <button className={css.filter}>
                 <p className={css.filter__text}>Filter</p>
-                <Image
-                  className={css.filter__icon}
-                  src={'/icons/down.svg'}
-                  alt="down icon"
-                  width={10}
-                  height={10}
-                />
+                <svg className={css.filter__icon} width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0.707031 0.707031L4.93493 4.93493L9.16283 0.707031" stroke="#7C5DFA" strokeWidth="2"/>
+                </svg>
+
               </button>
               <button className={css.newInvoice}>
                 <div className={css.newInvoice__icon}>
