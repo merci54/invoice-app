@@ -1,0 +1,157 @@
+@use '@/app/typography' as *;
+
+.main {
+    padding: 32px 0 105px 0 ;
+}
+
+.invoices {
+   
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    &__title {
+        @include Heading-M;
+    }
+
+    &__count {
+        color: var(--color-06);
+        @include Body;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 18.54px;
+    }
+
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+    }
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    
+    cursor: pointer;
+
+    &__text {
+        color: var(--color-08);
+        @include Heading-S-2;
+    }
+
+    &:hover {
+        .filter__icon path {
+            stroke: var(--color-02);
+        }
+  }
+}
+
+.newInvoice {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    padding: 6px;
+    width: 90px;
+    height: 44px;
+
+    border-radius: 24px;
+    background-color: var(--color-01);
+
+    color: #fff;
+    @include Heading-S-2;
+
+    &__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 32px;
+        height: 32px;
+        background-color: #fff;
+        border-radius: 50%;
+
+    }
+
+    &:hover {
+        background-color: var(--color-02);
+    }
+}
+
+.invoice {
+    background-color: #fff;
+    padding: 25px 24px;
+    border-radius: 8px;
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 24px;
+    }
+
+    &__id {
+        @include Heading-S-2
+    }
+
+    &__name {
+        @include Body-2;
+        color: #858BB2;
+    }
+
+    &__low {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+}
+
+.amount {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    &__date {
+        color: var(--color-06);
+        @include Body-2;
+    }
+
+    &__sum {
+        @include Heading-S-2;
+    }
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 30px;
+    background-color: rgba(51, 214, 159, 0.06);
+
+    border-radius: 6px;
+   
+    &__text {
+        color: #33D69F;
+        @include Heading-S-2;
+        
+    }
+    
+}
