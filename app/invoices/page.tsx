@@ -7,28 +7,26 @@ import { Invoice } from '@/lib/models/invoice';
 import NothingPage from '@/components/NothingPage/NothingPage';
 import { Invoice as InvoiceDB } from '@/types/invoice';
 
-
 function mapInvoiceToCard(invoice: InvoiceDB) {
   return {
     id: invoice.invoiceNumber,
     name: invoice.clientName,
-    date: `Due ${new Date(invoice.invoiceDate).toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
+    date: `Due ${new Date(invoice.invoiceDate).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
     })}`,
     sum: invoice.totalAmount,
     status: invoice.status,
   };
 }
 
-
 export default async function InvoicesPage() {
-     await connectMongoDB();
+  await connectMongoDB();
 
-    const invoices = await Invoice.find().lean<InvoiceDB[]>();
+  const invoices = await Invoice.find().lean<InvoiceDB[]>();
   const cards = invoices.map(mapInvoiceToCard);
-   const hasInvoices = cards.length > 0;
+  const hasInvoices = cards.length > 0;
 
   return (
     <main className={css.main}>
@@ -37,16 +35,29 @@ export default async function InvoicesPage() {
           <div className={css.invoices__top}>
             <div className={css.invoices__info}>
               <h1 className={css.invoices__title}>Invoices</h1>
-              <p className={css.invoices__count}>{cards.length > 0 ? cards.length : 'No'} {cards.length === 1 ? 'Invoice' : 'Invoices'}</p>
+              <p className={css.invoices__count}>
+                {cards.length > 0 ? cards.length : 'No'}{' '}
+                {cards.length === 1 ? 'Invoice' : 'Invoices'}
+              </p>
             </div>
 
             <div className={css.invoices__actions}>
               <button className={css.filter}>
                 <p className={css.filter__text}>Filter</p>
-                <svg className={css.filter__icon} width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0.707031 0.707031L4.93493 4.93493L9.16283 0.707031" stroke="#7C5DFA" strokeWidth="2"/>
+                <svg
+                  className={css.filter__icon}
+                  width="10"
+                  height="7"
+                  viewBox="0 0 10 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.707031 0.707031L4.93493 4.93493L9.16283 0.707031"
+                    stroke="#7C5DFA"
+                    strokeWidth="2"
+                  />
                 </svg>
-
               </button>
               <button className={css.newInvoice}>
                 <div className={css.newInvoice__icon}>
@@ -57,12 +68,7 @@ export default async function InvoicesPage() {
             </div>
           </div>
 
-          
-           {hasInvoices ? (
-            <InvoicesList invoices={cards} />
-          ) : (
-            <NothingPage />
-          )}
+          {hasInvoices ? <InvoicesList invoices={cards} /> : <NothingPage />}
         </div>
       </Container>
     </main>

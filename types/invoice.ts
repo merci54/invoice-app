@@ -1,23 +1,42 @@
-export type InvoiceStatus = "Paid" | "Pending" | "Draft";
+export type InvoiceStatus = 'Paid' | 'Pending' | 'Draft';
+
+export interface billProps {
+  street: string;
+  city: string;
+  postCode: string;
+  country: string;
+}
+
+export interface itemProps {
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
 
 export interface Invoice {
   _id: string;
   invoiceNumber: string;
+  billFrom: billProps;
 
   clientName: string;
   clientEmail: string;
 
-  invoiceDate: string; // ISO string
+  billTo: billProps;
+
+  invoiceDate: string;
   paymentTerms: number;
+  projectDescription: string;
+  items: itemProps[];
 
   totalAmount: number;
   status: InvoiceStatus;
 }
 
 export interface InvoiceCardProps {
-  id: string;        
-  name: string;      
-  date: string;      
-  sum: number;       
+  id: string;
+  name: string;
+  date: string;
+  sum: number;
   status: InvoiceStatus;
 }

@@ -1,0 +1,83 @@
+@use '@/app/typography' as *;
+
+.main {
+  padding: 32px 0 56px 0;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+
+  margin-bottom: 31px;
+
+  &__link {
+    @include Heading-S-2;
+  }
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px 24px 27px 24px;
+  border-radius: 8px;
+  background-color: #fff;
+
+  margin-bottom: 16px;
+
+  &__text {
+    @include Body-2;
+    color: #858bb2;
+  }
+
+  &__badge {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+
+    padding: 14px 0 11px 0;
+    border-radius: 6px;
+    min-width: 104px;
+  }
+
+  &__st {
+    @include Heading-S-2;
+  }
+
+  &__paid {
+    background-color: var(--green-bg);
+    color: var(--green);
+  }
+
+  &__pending {
+    background-color: var(--orange-bg);
+    color: var(--orange);
+  }
+
+  &__draft {
+    background-color: var(--black-bg);
+    color: var(--black);
+  }
+}
+
+.invoice {
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 24px;
+
+  &__hash {
+    color: var(--color-07);
+  }
+
+  &__id {
+    @include Heading-S-2;
+  }
+
+  &__text {
+    @include Body-2;
+    color: var(--color-07);
+  }
+}
