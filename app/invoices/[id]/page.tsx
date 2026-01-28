@@ -14,6 +14,28 @@ export default async function SingleInvoicePage({ params }: Props) {
   await connectMongoDB();
   const invoice = await Invoice.findById(id).lean<InvoiceDB>();
 
+  function formatDate(dateString = '2021-08-19T00:00:00.000Z') {
+    const date = new Date(dateString);
+
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).format(date);
+  }
+
+  function getPaymentDueDateFrom(startDate = '2021-08-19T00:00:00.000Z', days = 1) {
+    const date = new Date(startDate);
+    date.setUTCDate(date.getUTCDate() + days);
+
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(date);
+  }
+
   return (
     <main className={css.main}>
       <Container>
@@ -70,17 +92,48 @@ export default async function SingleInvoicePage({ params }: Props) {
           </div>
         </div>
 
-        <div className={css.invoice}>
-          <h2 className={css.invoice__id}>
-            <span className={css.invoice__hash}>#</span>
-            {invoice?.invoiceNumber}
-          </h2>
-          <span className={css.invoice__text}>{invoice?.projectDescription}</span>
-
-          <span>{invoice?.billFrom.street}</span>
-          <span>{invoice?.billFrom.city}</span>
-          <span>{invoice?.billFrom.postCode}</span>
-          <span>{invoice?.billFrom.country}</span>
+        <div className={css.content}>
+          <div className={css.content__titleBlock}>
+            <h2 className={css.title}>
+              <span className={css.text}>#</span>
+              {invoice?.invoiceNumber}
+            </h2>
+            <span className={css.text}>{invoice?.projectDescription}</span>
+          </div>
+          <div className={css.content__billFrom}>
+            <p className={css.text}>{invoice?.billFrom.street}</p>
+            <p className={css.text}>{invoice?.billFrom.city}</p>
+            <p className={css.text}>{invoice?.billFrom.postCode}</p>
+            <p className={css.text}>{invoice?.billFrom.country}</p>
+          </div>
+          <div className={css.content__info}>
+            <div className={css.date}>
+              <div className={css.date__create}>
+                <p className={css.date__text}>Invoice Date</p>
+                <p className={css.date__title}>{formatDate(invoice?.invoiceDate)}</p>
+              </div>
+              <div className={css.date__term}>
+                <p className={css.date__text}>Payment Due</p>
+                <p className={css.date__title}>
+                  {getPaymentDueDateFrom(invoice?.invoiceDate, invoice?.paymentTerms)}
+                </p>
+              </div>
+            </div>
+            <div className={css.billTo}>
+              <p className={css.billTo__title}>Bill To</p>
+              <p className={css.billTo__name}>{invoice?.clientName}</p>
+              <div className={css.billTo__info}>
+                <p className={css.text}>{invoice?.billTo.street}</p>
+                <p className={css.text}>{invoice?.billTo.city}</p>
+                <p className={css.text}>{invoice?.billTo.postCode}</p>
+                <p className={css.text}>{invoice?.billTo.country}</p>
+              </div>
+            </div>
+          </div>
+          <div className={css.content__sentTo}>
+            <p className={css.text}>Sent To</p>
+            <p className={css.title}>{invoice?.clientEmail}</p>
+          </div>
         </div>
       </Container>
     </main>

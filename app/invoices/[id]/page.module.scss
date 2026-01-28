@@ -63,21 +63,81 @@
   }
 }
 
-.invoice {
+.content {
   border-radius: 8px;
   background-color: #fff;
   padding: 24px;
 
-  &__hash {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  &__billFrom {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: top;
+    gap: 62px;
+  }
+
+  &__sentTo {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+
+    margin-bottom: 38px;
+  }
+}
+
+.title {
+  @include Heading-S-2;
+}
+
+.text {
+  @include Body-2;
+  color: var(--color-07);
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  &__text {
+    margin-bottom: 13px;
+    @include Body-2;
     color: var(--color-07);
   }
 
-  &__id {
+  &__title {
     @include Heading-S-2;
+  }
+}
+
+.billTo {
+  &__title {
+    margin-bottom: 13px;
+    @include Body-2;
+    color: var(--color-07);
+  }
+
+  &__name {
+    @include Heading-S-2;
+    margin-bottom: 7px;
   }
 
   &__text {
     @include Body-2;
     color: var(--color-07);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
   }
 }
