@@ -9,7 +9,8 @@ import { Invoice as InvoiceDB } from '@/types/invoice';
 
 function mapInvoiceToCard(invoice: InvoiceDB) {
   return {
-    id: invoice.invoiceNumber,
+    invoiceNumber: invoice.invoiceNumber,
+    id: invoice._id,
     name: invoice.clientName,
     date: `Due ${new Date(invoice.invoiceDate).toLocaleDateString('en-GB', {
       day: '2-digit',

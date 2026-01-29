@@ -35,6 +35,7 @@ export interface Invoice {
 
 export interface InvoiceCardProps {
   id: string;
+  invoiceNumber: string;
   name: string;
   date: string;
   sum: number;

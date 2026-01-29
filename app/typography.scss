@@ -1,47 +1,47 @@
 @mixin Heading-L {
-    font-size: 36px;
-    line-height: 33px;
-    letter-spacing: -1px;
+  font-size: 36px;
+  line-height: 33px;
+  letter-spacing: -1px;
 
-    font-weight: bold;
+  font-weight: bold;
 }
 
 @mixin Heading-M {
-    font-size: 24px;
-    line-height: 22px;
-    letter-spacing: -0.75px;
+  font-size: 24px;
+  line-height: 22px;
+  letter-spacing: -0.75px;
 
-    font-weight: bold;
+  font-weight: bold;
 }
 
 @mixin Heading-S {
-    font-size: 15px;
-    line-height: 24px;
-    letter-spacing: -0.25px;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.25px;
 
-    font-weight: bold;
+  font-weight: bold;
 }
 
 @mixin Heading-S-2 {
-    font-size: 15px;
-    line-height: 15px;
-    letter-spacing: -0.25px;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
 
-    font-weight: bold;
+  font-weight: bold;
 }
 
 @mixin Body {
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: -0.1px;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.1px;
 
-    font-weight: normal;
+  font-weight: normal;
 }
 
 @mixin Body-2 {
-    font-size: 13px;
-    line-height: 15px;
-    letter-spacing: -0.25px;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
 
-    font-weight: normal;
+  font-weight: normal;
 }

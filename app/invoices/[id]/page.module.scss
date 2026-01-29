@@ -141,3 +141,60 @@
     gap: 3px;
   }
 }
+
+.amount {
+  border-radius: 10px;
+  overflow: hidden;
+
+  &__items {
+    background-color: #f9fafe;
+    padding: 24px;
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__desc {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__itemPrice {
+    @include Heading-S-2;
+    color: var(--color-07);
+  }
+
+  &__itemTotalPrice {
+    @include Heading-S-2;
+    color: var(--color-08);
+  }
+
+  &__total {
+    background-color: #373b53;
+    padding: 26px 24px 22px 24px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: #fff;
+  }
+
+  &__totalText {
+    @include Body;
+  }
+
+  &__totalPrice {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+  }
+}
