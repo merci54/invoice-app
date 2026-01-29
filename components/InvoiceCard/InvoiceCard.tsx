@@ -14,7 +14,7 @@ export default function InvoiceCard({ invoiceNumber, name, date, sum, status }: 
       <div className={css.invoice__low}>
         <div className={css.amount}>
           <p className={css.amount__date}>{date}</p>
-          <p className={css.amount__sum}>£ {sum}</p>
+          <p className={css.amount__sum}>£ {sum.toFixed(2)}</p>
         </div>
         <div className={`${css.status} ${css[`status__${status.toLowerCase()}`]}`}>
           <svg

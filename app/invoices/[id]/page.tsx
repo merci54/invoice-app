@@ -23,7 +23,6 @@ export default async function SingleInvoicePage({ params }: Props) {
       year: 'numeric',
     }).format(date);
   }
-
   function getPaymentDueDateFrom(startDate = '2021-08-19T00:00:00.000Z', days = 1) {
     const date = new Date(startDate);
     date.setUTCDate(date.getUTCDate() + days);
@@ -137,7 +136,7 @@ export default async function SingleInvoicePage({ params }: Props) {
           <div className={css.amount}>
             <div className={css.amount__items}>
               <ul className={css.amount__list}>
-                <li className={css.amount__item}>
+                {/* <li className={css.amount__item}>
                   <div className={css.amount__desc}>
                     <p className={css.title}>Banner Design</p>
                     <p className={css.amount__itemPrice}>1 x £ 156.00</p>
@@ -150,12 +149,23 @@ export default async function SingleInvoicePage({ params }: Props) {
                     <p className={css.amount__itemPrice}>1 x £ 156.00</p>
                   </div>
                   <p className={css.amount__itemTotalPrice}>£ 156.00</p>
-                </li>
+                </li> */}
+                {invoice?.items.map(item => (
+                  <li key={item.name + 's2b'} className={css.amount__item}>
+                    <div className={css.amount__desc}>
+                      <p className={css.title}>{item.name}</p>
+                      <p className={css.amount__itemPrice}>
+                        {item.quantity} x £ {item.price.toFixed(2)}
+                      </p>
+                    </div>
+                    <p className={css.amount__itemTotalPrice}>£ {item.total.toFixed(2)}</p>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className={css.amount__total}>
               <p className={css.amount__totalText}>Grand Total</p>
-              <p className={css.amount__totalPrice}>£ 556.00</p>
+              <p className={css.amount__totalPrice}>£ {invoice?.totalAmount.toFixed(2)}</p>
             </div>
           </div>
         </div>
