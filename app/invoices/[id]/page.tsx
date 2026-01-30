@@ -136,20 +136,6 @@ export default async function SingleInvoicePage({ params }: Props) {
           <div className={css.amount}>
             <div className={css.amount__items}>
               <ul className={css.amount__list}>
-                {/* <li className={css.amount__item}>
-                  <div className={css.amount__desc}>
-                    <p className={css.title}>Banner Design</p>
-                    <p className={css.amount__itemPrice}>1 x £ 156.00</p>
-                  </div>
-                  <p className={css.amount__itemTotalPrice}>£ 156.00</p>
-                </li>
-                <li className={css.amount__item}>
-                  <div className={css.amount__desc}>
-                    <p className={css.title}>Banner Design</p>
-                    <p className={css.amount__itemPrice}>1 x £ 156.00</p>
-                  </div>
-                  <p className={css.amount__itemTotalPrice}>£ 156.00</p>
-                </li> */}
                 {invoice?.items.map(item => (
                   <li key={item.name + 's2b'} className={css.amount__item}>
                     <div className={css.amount__desc}>
@@ -170,6 +156,13 @@ export default async function SingleInvoicePage({ params }: Props) {
           </div>
         </div>
       </Container>
+      <div className={css.buttonPanel}>
+        <Link className={`${css.buttonPanel__edit} ${css.button}`} href={`/invoices/${id}/edit`}>
+          Edit
+        </Link>
+        <button className={`${css.buttonPanel__delete} ${css.button}`}>Delete</button>
+        <button className={`${css.buttonPanel__paid} ${css.button}`}>Mark as Paid</button>
+      </div>
     </main>
   );
 }
