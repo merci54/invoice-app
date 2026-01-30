@@ -4,6 +4,7 @@ import { Invoice as InvoiceDB } from '@/types/invoice';
 import css from './page.module.scss';
 import Container from '@/components/Container/Container';
 import Link from 'next/link';
+import PaidButton from '@/components/PaidButton/PaidButton';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -161,7 +162,7 @@ export default async function SingleInvoicePage({ params }: Props) {
           Edit
         </Link>
         <button className={`${css.buttonPanel__delete} ${css.button}`}>Delete</button>
-        <button className={`${css.buttonPanel__paid} ${css.button}`}>Mark as Paid</button>
+        <PaidButton invoiceId={id} />
       </div>
     </main>
   );
