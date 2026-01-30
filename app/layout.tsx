@@ -3,6 +3,7 @@ import { League_Spartan } from 'next/font/google';
 import './globals.scss';
 import 'modern-normalize';
 import Header from '@/components/Header/Header';
+import { Toaster } from 'react-hot-toast';
 
 const spartan = League_Spartan({
   variable: '--font-spartan',
@@ -23,6 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={spartan.variable}>
+        <div>
+          <Toaster />
+        </div>
+
         <Header />
         {children}
       </body>
