@@ -6,17 +6,14 @@ import { connectMongoDB } from '@/lib/db/connectMongoDB';
 import { Invoice } from '@/lib/models/invoice';
 import NothingPage from '@/components/NothingPage/NothingPage';
 import { Invoice as InvoiceDB } from '@/types/invoice';
+import { formatDate } from '@/lib/utils/date';
 
 function mapInvoiceToCard(invoice: InvoiceDB) {
   return {
     invoiceNumber: invoice.invoiceNumber,
     id: invoice._id,
     name: invoice.clientName,
-    date: `Due ${new Date(invoice.invoiceDate).toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    })}`,
+    date: `Due ${formatDate(invoice.invoiceDate)}`,
     sum: invoice.totalAmount,
     status: invoice.status,
   };

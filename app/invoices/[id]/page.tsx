@@ -5,6 +5,7 @@ import css from './page.module.scss';
 import Container from '@/components/Container/Container';
 import Link from 'next/link';
 import PaidButton from '@/components/PaidButton/PaidButton';
+import { formatDate, formatDueDate } from '@/lib/utils/date';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -14,27 +15,6 @@ export default async function SingleInvoicePage({ params }: Props) {
   const { id } = await params;
   await connectMongoDB();
   const invoice = await Invoice.findById(id).lean<InvoiceDB>();
-
-  function formatDate(dateString = '2021-08-19T00:00:00.000Z') {
-    const date = new Date(dateString);
-
-    return new Intl.DateTimeFormat('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    }).format(date);
-  }
-  function getPaymentDueDateFrom(startDate = '2021-08-19T00:00:00.000Z', days = 1) {
-    const date = new Date(startDate);
-    date.setUTCDate(date.getUTCDate() + days);
-
-    return new Intl.DateTimeFormat('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-      timeZone: 'UTC',
-    }).format(date);
-  }
 
   return (
     <main className={css.main}>
@@ -115,7 +95,7 @@ export default async function SingleInvoicePage({ params }: Props) {
               <div className={css.date__term}>
                 <p className={css.date__text}>Payment Due</p>
                 <p className={css.date__title}>
-                  {getPaymentDueDateFrom(invoice?.invoiceDate, invoice?.paymentTerms)}
+                  {formatDueDate(invoice?.invoiceDate, invoice?.paymentTerms)}
                 </p>
               </div>
             </div>
