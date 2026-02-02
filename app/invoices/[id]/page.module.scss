@@ -72,6 +72,10 @@
   flex-direction: column;
   gap: 30px;
 
+  box-shadow:
+    0px 20px 40px rgba(15, 23, 42, 0.08),
+    0px 8px 16px rgba(15, 23, 42, 0.06);
+
   &__billFrom {
     display: flex;
     flex-direction: column;
