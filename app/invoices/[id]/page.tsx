@@ -6,15 +6,21 @@ import Container from '@/components/Container/Container';
 import Link from 'next/link';
 import PaidButton from '@/components/PaidButton/PaidButton';
 import { formatDate, formatDueDate } from '@/lib/utils/date';
+import DeleteModalClient from './DeleteModalClient';
 
 interface Props {
   params: Promise<{ id: string }>;
+  searchParams?: Promise<{ delete?: string }>;
 }
 
-export default async function SingleInvoicePage({ params }: Props) {
+export default async function SingleInvoicePage({ params, searchParams }: Props) {
   const { id } = await params;
   await connectMongoDB();
   const invoice = await Invoice.findById(id).lean<InvoiceDB>();
+
+  const { delete: deleteParam } = searchParams ? await searchParams : {};
+
+  const isDeleteOpen = deleteParam === '1';
 
   return (
     <main className={css.main}>
@@ -141,9 +147,18 @@ export default async function SingleInvoicePage({ params }: Props) {
         <Link className={`${css.buttonPanel__edit} ${css.button}`} href={`/invoices/${id}/edit`}>
           Edit
         </Link>
-        <button className={`${css.buttonPanel__delete} ${css.button}`}>Delete</button>
+        <Link
+          className={`${css.buttonPanel__delete} ${css.button}`}
+          href={`/invoices/${id}?delete=1`}
+          scroll={false}
+        >
+          Delete
+        </Link>
         <PaidButton invoiceId={id} />
       </div>
+      {isDeleteOpen && (
+        <DeleteModalClient invoiceId={id} invoiceNumber={invoice?.invoiceNumber || '#RZ2523'} />
+      )}
     </main>
   );
 }
