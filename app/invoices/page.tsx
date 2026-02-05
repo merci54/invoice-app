@@ -7,6 +7,7 @@ import { Invoice } from '@/lib/models/invoice';
 import NothingPage from '@/components/NothingPage/NothingPage';
 import { Invoice as InvoiceDB } from '@/types/invoice';
 import { formatDate } from '@/lib/utils/date';
+import Link from 'next/link';
 
 function mapInvoiceToCard(invoice: InvoiceDB) {
   return {
@@ -57,12 +58,12 @@ export default async function InvoicesPage() {
                   />
                 </svg>
               </button>
-              <button className={css.newInvoice}>
+              <Link href={'/invoices/create'} className={css.newInvoice}>
                 <div className={css.newInvoice__icon}>
                   <Image src={'/icons/plus.svg'} alt="plus icon" width={10} height={10} />
                 </div>
                 New
-              </button>
+              </Link>
             </div>
           </div>
 

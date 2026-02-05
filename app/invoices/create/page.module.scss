@@ -1,0 +1,87 @@
+@use '@/app/typography' as *;
+
+.main {
+  padding-top: 32px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+
+  margin-bottom: 31px;
+
+  &__link {
+    @include Heading-S-2;
+  }
+}
+
+.title {
+  margin: 26px 0 22px 0;
+  @include Heading-M;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 41px;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    border: none;
+  }
+
+  &__double {
+    display: flex;
+    gap: 23px;
+  }
+
+  &__double > label {
+    flex: 1;
+  }
+
+  &__double input {
+    width: 100%;
+  }
+
+  &__legend {
+    margin-bottom: 24px;
+    color: var(--color-01);
+    @include Heading-S-2;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    color: var(--color-07);
+    @include Body-2;
+  }
+
+  &__input {
+    border-radius: 4px;
+    border: 1px solid var(--color-05);
+    padding: 18px 20px 15px 20px;
+
+    @include Heading-S-2;
+    color: var(--color-08);
+  }
+
+  &__input::placeholder {
+    color: var(--color-08);
+  }
+
+  &__input:focus {
+    border: 1px solid var(--color-02);
+    outline: none;
+  }
+
+  &__input:active {
+    border: 1px solid var(--color-02);
+    outline: none;
+  }
+}

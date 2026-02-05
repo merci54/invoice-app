@@ -25,8 +25,8 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
   return (
     <main className={css.main}>
       <Container>
-        <Link href={'/invoices'}>
-          <div className={css.back}>
+        <div className={css.back}>
+          <Link href={'/invoices'}>
             <svg
               className={css.back__icon}
               width="5"
@@ -41,9 +41,11 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
                 strokeWidth="2"
               />
             </svg>
+          </Link>
+          <Link href={'/invoices'}>
             <span className={css.back__link}>Go back</span>
-          </div>
-        </Link>
+          </Link>
+        </div>
 
         <div className={css.status}>
           <span className={css.status__text}>Status</span>
