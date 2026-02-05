@@ -26,7 +26,7 @@ export default function CreateInvoice() {
       country: '',
     },
 
-    invoiceDate: 'string',
+    invoiceDate: '',
     paymentTerms: 1,
     projectDescription: '',
     items: [],
@@ -160,6 +160,32 @@ export default function CreateInvoice() {
                     className={css.form__input}
                     name={'billTo.country'}
                     placeholder={'United Kingdom'}
+                  />
+                </label>
+              </fieldset>
+              <fieldset className={css.form__group}>
+                <label className={css.form__label} htmlFor="invoiceDate">
+                  Invoice Date
+                  <Field
+                    className={css.form__input}
+                    name={'invoiceDate'}
+                    placeholder={'21 Aug 2021'}
+                  />
+                </label>
+                <label className={css.form__label} htmlFor="paymentTerms">
+                  Payment Terms
+                  <Field
+                    className={css.form__input}
+                    name={'paymentTerms'}
+                    placeholder={'Net 1 Day'}
+                  />
+                </label>
+                <label className={css.form__label} htmlFor="projectDescription">
+                  Project Description
+                  <Field
+                    className={css.form__input}
+                    name={'projectDescription'}
+                    placeholder={'Graphic Design'}
                   />
                 </label>
               </fieldset>
