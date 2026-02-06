@@ -64,7 +64,7 @@ export default function CreateInvoice() {
         </div>
         <h1 className={css.title}>New Invoice</h1>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({ isSubmitting, errors, touched }) => (
+          {({ isSubmitting }) => (
             <Form className={css.form}>
               <fieldset className={css.form__group}>
                 <legend className={css.form__legend}>Bill From</legend>
