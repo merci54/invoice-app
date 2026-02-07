@@ -66,7 +66,7 @@
     border-radius: 4px;
     border: 1px solid var(--color-05);
     padding: 18px 20px 15px 20px;
-
+    background-color: #fff;
     @include Heading-S-2;
     color: var(--color-08);
   }
@@ -86,11 +86,30 @@
   }
 }
 
-.inputIcon {
+.calendar {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 9px;
+
+  &__input {
+    border-radius: 4px;
+    border: 1px solid var(--color-05);
+    padding: 18px 20px 15px 20px;
+    background-color: #fff;
+    @include Heading-S-2;
+    color: var(--color-08);
+  }
+
+  &__input.active {
+    border: 1px solid var(--color-02);
+    outline: none;
+  }
+
+  &__active {
+    border: 1px solid var(--color-02);
+    outline: none;
+  }
 }
 
 .icon {
@@ -106,146 +125,21 @@
   background: var(--color-11, #fff);
   border-radius: 8px;
   box-shadow: 0px 10px 20px 0px rgba(72, 84, 159, 0.25);
-  padding: 26px 20px 31px 20px;
+  padding: 26px 18.5px 31px 19.5px;
+  @include Heading-S-2;
 
-  :global(.rdp) {
-    --rdp-accent-color: #7c5dfa;
+  :global(.rdp-root) {
+    --rdp-accent-color: var(--color-01);
     --rdp-background-color: transparent;
-    margin: 0;
-    width: 100%;
-  }
-
-  :global(.rdp-month) {
-    width: 100%;
-  }
-
-  :global(.rdp-caption) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    margin-bottom: 32px;
-  }
-
-  :global(.rdp-caption_label) {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--color-08, #0c0e16);
-    text-align: center;
-    @include Heading-S-2;
-  }
-
-  :global(.rdp-nav) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  :global(.rdp-button_previous),
-  :global(.rdp-button_next) {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-  }
-
-  :global(.rdp-chevron) {
-    fill: #7c5dfa;
-    width: 12px;
-    height: 12px;
-  }
-
-  :global(.rdp-months) {
-    margin: 0;
-    width: 100%;
+    --rdp-outside-opacity: 10%;
+    --rdp-selected-border: none;
   }
 
   :global(.rdp-month_caption) {
-    margin: 0;
+    margin-bottom: 32px;
   }
 
-  :global(.rdp-weekdays) {
-    display: none;
-  }
-
-  :global(.rdp-weeks) {
-    margin: 0;
-    width: 100%;
-  }
-
-  :global(.rdp-week) {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    column-gap: 15px;
-    row-gap: 15px;
-    margin: 0;
-    width: 100%;
-
-    &:not(:last-child) {
-      margin-bottom: 15px;
-    }
-  }
-
-  :global(.rdp-day) {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--color-08, #0c0e16);
-    @include Heading-S-2;
-    border-radius: 0;
-    width: 100%;
-    margin: 0;
-  }
-
-  :global(.rdp-day_button) {
-    width: 100%;
-    height: 100%;
-    min-height: 30px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    border-radius: 0;
-    padding: 0;
-    transition: color 0.2s ease;
-    font-size: 15px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      background-color: transparent;
-      color: #7c5dfa;
-    }
-  }
-
-  :global(.rdp-day_selected .rdp-day_button) {
-    background-color: transparent;
-    color: #7c5dfa;
-    font-weight: 700;
-  }
-
-  :global(.rdp-outside) {
-    opacity: 0.08;
-  }
-
-  :global(.rdp-outside .rdp-day_button) {
-    color: var(--color-08, #0c0e16);
-  }
-
-  :global(.rdp-today) {
-    font-weight: 700;
-  }
-
-  :global(.rdp-month_grid) {
-    width: 100%;
+  :global(.rdp-selected) {
+    font-size: inherit;
   }
 }
