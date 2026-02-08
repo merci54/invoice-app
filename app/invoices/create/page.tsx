@@ -9,6 +9,12 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 import { useState, useRef, useEffect } from 'react';
 import { format } from 'date-fns';
+import Select, { CSSObjectWithLabel, ControlProps, OptionProps, StylesConfig } from 'react-select';
+
+type PaymentOption = {
+  value: number;
+  label: string;
+};
 
 export default function CreateInvoice() {
   type initialInvoice = Omit<Invoice, '_id' | 'status' | 'totalAmount' | 'invoiceNumber'>;
@@ -39,6 +45,13 @@ export default function CreateInvoice() {
   const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef<HTMLDivElement>(null);
 
+  const paymentOptions = [
+    { value: 1, label: 'Net 1 Day' },
+    { value: 7, label: 'Net 7 Days' },
+    { value: 14, label: 'Net 14 Days' },
+    { value: 30, label: 'Net 30 Days' },
+  ];
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
@@ -62,6 +75,83 @@ export default function CreateInvoice() {
     console.log(values);
   };
 
+  const customSelectStyles: StylesConfig<PaymentOption, false> = {
+    control: (base: CSSObjectWithLabel, state: ControlProps<PaymentOption, false>) => ({
+      ...base,
+      borderRadius: '4px',
+      border: state.isFocused ? '1px solid var(--color-02)' : '1px solid var(--color-05)',
+      padding: '14px 20px 14px 20px',
+      backgroundColor: '#fff',
+      boxShadow: 'none',
+      cursor: 'pointer',
+      '&:hover': {
+        border: state.isFocused ? '1px solid var(--color-02)' : '1px solid var(--color-05)',
+      },
+    }),
+    valueContainer: (base: CSSObjectWithLabel) => ({
+      ...base,
+      padding: 0,
+    }),
+    singleValue: (base: CSSObjectWithLabel) => ({
+      ...base,
+      fontSize: '15px',
+      fontWeight: 700,
+      color: 'var(--color-08)',
+      margin: 0,
+    }),
+    placeholder: (base: CSSObjectWithLabel) => ({
+      ...base,
+      fontSize: '15px',
+      fontWeight: 700,
+      color: 'var(--color-08)',
+      margin: 0,
+    }),
+    input: (base: CSSObjectWithLabel) => ({
+      ...base,
+      margin: 0,
+      padding: 0,
+    }),
+    indicatorSeparator: () => ({
+      display: 'none',
+    }),
+    dropdownIndicator: (base: CSSObjectWithLabel) => ({
+      ...base,
+      color: 'var(--color-01)',
+      padding: 0,
+      '&:hover': {
+        color: 'var(--color-01)',
+      },
+    }),
+    menu: (base: CSSObjectWithLabel) => ({
+      ...base,
+      borderRadius: '8px',
+      boxShadow: '0px 10px 20px 0px rgba(72, 84, 159, 0.25)',
+      marginTop: '24px',
+      overflow: 'hidden',
+      border: 'none',
+    }),
+    menuList: (base: CSSObjectWithLabel) => ({
+      ...base,
+      padding: 0,
+    }),
+    option: (base: CSSObjectWithLabel, state: OptionProps<PaymentOption, false>) => ({
+      ...base,
+      fontSize: '15px',
+      fontWeight: 700,
+      color: state.isSelected ? 'var(--color-01)' : 'var(--color-08)',
+      backgroundColor: '#fff',
+      padding: '17px 24px 16px 24px',
+      cursor: 'pointer',
+      borderBottom: '1px solid var(--color-05)',
+      '&:hover': {
+        color: 'var(--color-01)',
+        backgroundColor: '#fff',
+      },
+      '&:last-child': {
+        borderBottom: 'none',
+      },
+    }),
+  };
   return (
     <main className={css.main}>
       <Container>
@@ -241,14 +331,21 @@ export default function CreateInvoice() {
                   )}
                 </div>
 
-                <label className={css.form__label} htmlFor="paymentTerms">
-                  Payment Terms
-                  <Field
-                    className={css.form__input}
-                    name={'paymentTerms'}
-                    placeholder={'Net 1 Day'}
+                <div className={css.select}>
+                  <label className={css.form__label} htmlFor="paymentTerms">
+                    Payment Terms
+                  </label>
+                  <Select
+                    instanceId="paymentTerms"
+                    options={paymentOptions}
+                    value={paymentOptions.find(option => option.value === values.paymentTerms)}
+                    onChange={option => setFieldValue('paymentTerms', option?.value)}
+                    styles={customSelectStyles}
+                    isSearchable={false}
+                    placeholder="Net 30 Days"
                   />
-                </label>
+                </div>
+
                 <label className={css.form__label} htmlFor="projectDescription">
                   Project Description
                   <Field
