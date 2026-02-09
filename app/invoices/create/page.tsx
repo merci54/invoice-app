@@ -39,7 +39,14 @@ export default function CreateInvoice() {
     invoiceDate: '',
     paymentTerms: 1,
     projectDescription: '',
-    items: [],
+    items: [
+      {
+        name: 'Banner Design',
+        quantity: 1,
+        price: 156,
+        total: 156,
+      },
+    ],
   };
 
   const [showCalendar, setShowCalendar] = useState(false);
@@ -211,6 +218,7 @@ export default function CreateInvoice() {
                     />
                   </label>
                 </div>
+
                 <label className={css.form__label} htmlFor="billFrom.country">
                   Country
                   <Field
@@ -354,6 +362,55 @@ export default function CreateInvoice() {
                     placeholder={'Graphic Design'}
                   />
                 </label>
+              </fieldset>
+              <fieldset className={css.items}>
+                <legend className={css.items__legend}>Item List</legend>
+                <ul className={css.itemsList}>
+                  {values.items.map(el => (
+                    <li key={el.name} className={css.itemsList__item}>
+                      <label className={css.items__label} htmlFor={el.name}>
+                        Item Name
+                        <Field
+                          className={css.items__input}
+                          name={el.name}
+                          placeholder={'Banner Design'}
+                        />
+                        <div className={css.items__group}>
+                          <label htmlFor={el.name}>
+                            Qty.
+                            <Field className={css.items__input} name={el.price} placeholder={'1'} />
+                          </label>
+                          <label htmlFor={el.name}>
+                            Price
+                            <Field
+                              className={css.items__input}
+                              name={el.price}
+                              placeholder={'156.00'}
+                            />
+                          </label>
+                          <div>
+                            Total
+                            <span>156.00</span>
+                          </div>
+                          <svg
+                            width="13"
+                            height="16"
+                            viewBox="0 0 13 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M8.44442 0L9.33333 0.888875H12.4444V2.66667H0V0.888875H3.11108L4 0H8.44442ZM2.66667 16C1.68442 16 0.888875 15.2045 0.888875 14.2222V3.55554H11.5555V14.2222C11.5555 15.2045 10.76 16 9.77779 16H2.66667Z"
+                              fill="#888EB0"
+                            />
+                          </svg>
+                        </div>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
               </fieldset>
             </Form>
           )}
