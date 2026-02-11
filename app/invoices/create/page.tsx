@@ -3,7 +3,7 @@
 import Container from '@/components/Container/Container';
 import css from './page.module.scss';
 import Link from 'next/link';
-import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { Field, FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import { Invoice } from '@/types/invoice';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
@@ -75,11 +75,19 @@ export default function CreateInvoice() {
     };
   }, [showCalendar]);
 
-  const handleSubmit = (
-    values: initialInvoice,
-    { setSubmitting }: FormikHelpers<initialInvoice>
-  ) => {
-    console.log(values);
+  const handleSubmit = (values: initialInvoice) => {
+    const totalAmount = values.items.reduce((sum, item) => sum + item.quantity * item.price, 0);
+
+    const invoiceToSend = {
+      ...values,
+      items: values.items.map(item => ({
+        ...item,
+        total: item.quantity * item.price,
+      })),
+      totalAmount,
+    };
+
+    console.log(invoiceToSend);
   };
 
   const customSelectStyles: StylesConfig<PaymentOption, false> = {
@@ -187,6 +195,7 @@ export default function CreateInvoice() {
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ isSubmitting, setFieldValue, values }) => (
             <Form className={css.form}>
+              {/* Bill From */}
               <fieldset className={css.form__group}>
                 <legend className={css.form__legend}>Bill From</legend>
 
@@ -228,6 +237,8 @@ export default function CreateInvoice() {
                   />
                 </label>
               </fieldset>
+
+              {/* Bill To */}
               <fieldset className={css.form__group}>
                 <legend className={css.form__legend}>Bill To</legend>
                 <label className={css.form__label} htmlFor="clientName">
@@ -285,6 +296,8 @@ export default function CreateInvoice() {
                   />
                 </label>
               </fieldset>
+
+              {/* Calendar */}
               <fieldset className={css.form__group}>
                 <div className={css.calendar} ref={calendarRef}>
                   <label className={css.form__label} htmlFor="invoiceDate">
@@ -365,53 +378,101 @@ export default function CreateInvoice() {
               </fieldset>
               <fieldset className={css.items}>
                 <legend className={css.items__legend}>Item List</legend>
-                <ul className={css.itemsList}>
-                  {values.items.map(el => (
-                    <li key={el.name} className={css.itemsList__item}>
-                      <label className={css.items__label} htmlFor={el.name}>
-                        Item Name
-                        <Field
-                          className={css.items__input}
-                          name={el.name}
-                          placeholder={'Banner Design'}
-                        />
-                        <div className={css.items__group}>
-                          <label htmlFor={el.name}>
-                            Qty.
-                            <Field className={css.items__input} name={el.price} placeholder={'1'} />
-                          </label>
-                          <label htmlFor={el.name}>
-                            Price
-                            <Field
-                              className={css.items__input}
-                              name={el.price}
-                              placeholder={'156.00'}
-                            />
-                          </label>
-                          <div>
-                            Total
-                            <span>156.00</span>
-                          </div>
-                          <svg
-                            width="13"
-                            height="16"
-                            viewBox="0 0 13 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              clip-rule="evenodd"
-                              d="M8.44442 0L9.33333 0.888875H12.4444V2.66667H0V0.888875H3.11108L4 0H8.44442ZM2.66667 16C1.68442 16 0.888875 15.2045 0.888875 14.2222V3.55554H11.5555V14.2222C11.5555 15.2045 10.76 16 9.77779 16H2.66667Z"
-                              fill="#888EB0"
-                            />
-                          </svg>
-                        </div>
-                      </label>
-                    </li>
-                  ))}
-                </ul>
+
+                <FieldArray name="items">
+                  {({ push, remove }) => (
+                    <>
+                      <ul className={css.items__list}>
+                        {values.items.map((item, index) => {
+                          const total = item.quantity * item.price;
+
+                          return (
+                            <li key={index} className={css.items__item}>
+                              {/* Item Name */}
+                              <label className={css.items__label}>
+                                Item Name
+                                <Field
+                                  className={css.form__input}
+                                  name={`items[${index}].name`}
+                                  placeholder="Banner Design"
+                                />
+                              </label>
+
+                              <div className={css.items__group}>
+                                <div>
+                                  {/* Qty */}
+
+                                  <label className={`${css.form__label} ${css.items__qtyLabel}`}>
+                                    Qty.
+                                    <Field
+                                      className={css.form__input}
+                                      type="number"
+                                      name={`items[${index}].quantity`}
+                                    />
+                                  </label>
+
+                                  {/* Price */}
+                                  <label className={`${css.form__label} ${css.items__priceLabel}`}>
+                                    Price
+                                    <Field
+                                      className={css.form__input}
+                                      type="number"
+                                      name={`items[${index}].price`}
+                                    />
+                                  </label>
+
+                                  {/* Total */}
+                                  <div className={css.items__total}>
+                                    Total
+                                    <span>{total.toFixed(2)}</span>
+                                  </div>
+                                </div>
+
+                                {/* Delete Button */}
+                                <button
+                                  type="button"
+                                  onClick={() => remove(index)}
+                                  className={css.items__delete}
+                                >
+                                  <svg
+                                    width="13"
+                                    height="16"
+                                    viewBox="0 0 13 16"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M11.5557 3.55566V14.2227C11.5554 15.2047 10.7594 16 9.77734 16H2.66699C1.68489 16 0.888913 15.2047 0.888672 14.2227V3.55566H11.5557ZM8.44434 0L9.33301 0.888672H12.4443V2.66699H0V0.888672H3.11133L4 0H8.44434Z"
+                                      fill="#888EB0"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+
+                      {/* Add New Item */}
+                      <button
+                        type="button"
+                        className={css.items__add}
+                        onClick={() =>
+                          push({
+                            name: '',
+                            quantity: 1,
+                            price: 0,
+                            total: 0,
+                          })
+                        }
+                      >
+                        + Add New Item
+                      </button>
+                    </>
+                  )}
+                </FieldArray>
               </fieldset>
+              <button type="submit">Send</button>
             </Form>
           )}
         </Formik>
