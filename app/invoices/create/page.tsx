@@ -3,7 +3,7 @@
 import Container from '@/components/Container/Container';
 import css from './page.module.scss';
 import Link from 'next/link';
-import { Field, FieldArray, Form, Formik, FormikHelpers } from 'formik';
+import { Field, FieldArray, Form, Formik } from 'formik';
 import { Invoice } from '@/types/invoice';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
@@ -313,7 +313,11 @@ export default function CreateInvoice() {
                       justifyContent: 'space-between',
                     }}
                   >
-                    <span>{values.invoiceDate || '21 Aug 2021'}</span>
+                    <span>
+                      {values.invoiceDate
+                        ? format(new Date(values.invoiceDate), 'dd MMM yyyy')
+                        : '21 Aug 2021'}
+                    </span>
                     <svg
                       className={css.icon}
                       width="16"
@@ -340,7 +344,7 @@ export default function CreateInvoice() {
                         selected={values.invoiceDate ? new Date(values.invoiceDate) : undefined}
                         onSelect={date => {
                           if (date) {
-                            setFieldValue('invoiceDate', format(date, 'dd MMM yyyy'));
+                            setFieldValue('invoiceDate', date.toISOString());
                             setShowCalendar(false);
                           }
                         }}
