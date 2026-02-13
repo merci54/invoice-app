@@ -10,35 +10,74 @@ import 'react-day-picker/style.css';
 import { useState, useRef, useEffect } from 'react';
 import { format } from 'date-fns';
 import Select, { CSSObjectWithLabel, ControlProps, OptionProps, StylesConfig } from 'react-select';
+import * as Yup from 'yup';
 
 type PaymentOption = {
   value: number;
   label: string;
 };
 
+export const formSchema = Yup.object({
+  billFrom: Yup.object({
+    street: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Street is required'),
+    city: Yup.string().required('City is required'),
+    postCode: Yup.string().min(2).max(8).required('Post Code is required'),
+    country: Yup.string().required('Country is required'),
+  }),
+
+  clientName: Yup.string().required("Client's name is required"),
+
+  clientEmail: Yup.string().email('Invalid email').required("Client's email is required"),
+
+  billTo: Yup.object({
+    street: Yup.string().required('Street is required'),
+    city: Yup.string().required('City is required'),
+    postCode: Yup.string().min(2).max(8).required('Post Code is required'),
+    country: Yup.string().required('Country is required'),
+  }),
+
+  invoiceDate: Yup.string().required('Invoice date is required'),
+  paymentTerms: Yup.number().oneOf([1, 7, 14, 30]).required('Payment terms is required'),
+  projectDescription: Yup.string().required('Project description is required'),
+
+  items: Yup.array()
+    .of(
+      Yup.object({
+        name: Yup.string().required('Item name is required'),
+
+        quantity: Yup.number().min(1, 'Minimum quantity is 1').required('Quantity is required'),
+
+        price: Yup.number().min(0.01, 'Price must be greater than 0').required('Price is required'),
+
+        total: Yup.number(),
+      })
+    )
+    .min(1, 'At least one item is required'),
+});
+
 export default function CreateInvoice() {
   type initialInvoice = Omit<Invoice, '_id' | 'status' | 'totalAmount' | 'invoiceNumber'>;
   const initialValues: initialInvoice = {
     billFrom: {
-      street: '',
-      city: '',
-      postCode: '',
-      country: '',
+      street: '17 Rue Berthe Morisot',
+      city: 'Reims',
+      postCode: '51100',
+      country: 'France',
     },
 
-    clientName: '',
-    clientEmail: '',
+    clientName: 'Yaroslav',
+    clientEmail: 'yaroslavlit@gmail.com',
 
     billTo: {
-      street: '',
-      city: '',
-      postCode: '',
-      country: '',
+      street: '18 rue Lenina',
+      city: 'Paris',
+      postCode: '51000',
+      country: 'France',
     },
 
     invoiceDate: '',
     paymentTerms: 1,
-    projectDescription: '',
+    projectDescription: 'Important Invoice',
     items: [
       {
         name: 'Banner Design',
@@ -192,7 +231,7 @@ export default function CreateInvoice() {
           </Link>
         </div>
         <h1 className={css.title}>New Invoice</h1>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={formSchema}>
           {({ isSubmitting, setFieldValue, values }) => (
             <Form className={css.form}>
               {/* Bill From */}
