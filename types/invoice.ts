@@ -33,6 +33,23 @@ export interface Invoice {
   status: InvoiceStatus;
 }
 
+export interface CreateInvoiceProps {
+  billFrom: billProps;
+
+  clientName: string;
+  clientEmail: string;
+
+  billTo: billProps;
+
+  invoiceDate: string;
+  paymentTerms: number;
+  projectDescription: string;
+  items: itemProps[];
+
+  totalAmount: number;
+  status?: InvoiceStatus;
+}
+
 export interface InvoiceCardProps {
   id: string;
   invoiceNumber: string;
@@ -41,3 +58,5 @@ export interface InvoiceCardProps {
   sum: number;
   status: InvoiceStatus;
 }
+
+export type initialInvoice = Omit<Invoice, '_id' | 'status' | 'totalAmount' | 'invoiceNumber'>;

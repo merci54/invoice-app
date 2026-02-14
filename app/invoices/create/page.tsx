@@ -4,20 +4,23 @@ import Container from '@/components/Container/Container';
 import css from './page.module.scss';
 import Link from 'next/link';
 import { Field, FieldArray, Form, Formik } from 'formik';
-import { Invoice } from '@/types/invoice';
+import { initialInvoice } from '@/types/invoice';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 import { useState, useRef, useEffect } from 'react';
 import { format } from 'date-fns';
 import Select, { CSSObjectWithLabel, ControlProps, OptionProps, StylesConfig } from 'react-select';
 import * as Yup from 'yup';
+import { createInvoice } from '@/lib/actions/invoice';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 type PaymentOption = {
   value: number;
   label: string;
 };
 
-export const formSchema = Yup.object({
+const formSchema = Yup.object({
   billFrom: Yup.object({
     street: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Street is required'),
     city: Yup.string().required('City is required'),
@@ -56,7 +59,9 @@ export const formSchema = Yup.object({
 });
 
 export default function CreateInvoice() {
-  type initialInvoice = Omit<Invoice, '_id' | 'status' | 'totalAmount' | 'invoiceNumber'>;
+  const router = useRouter();
+
+  // Initial Values for Formik
   const initialValues: initialInvoice = {
     billFrom: {
       street: '17 Rue Berthe Morisot',
@@ -88,9 +93,13 @@ export default function CreateInvoice() {
     ],
   };
 
+  // State for calendar visibility
   const [showCalendar, setShowCalendar] = useState(false);
+
+  // Ref for calendar to handle outside clicks
   const calendarRef = useRef<HTMLDivElement>(null);
 
+  // Payment options for the select dropdown
   const paymentOptions = [
     { value: 1, label: 'Net 1 Day' },
     { value: 7, label: 'Net 7 Days' },
@@ -98,6 +107,7 @@ export default function CreateInvoice() {
     { value: 30, label: 'Net 30 Days' },
   ];
 
+  // Effect to handle clicks outside the calendar to close it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
@@ -114,21 +124,35 @@ export default function CreateInvoice() {
     };
   }, [showCalendar]);
 
-  const handleSubmit = (values: initialInvoice) => {
-    const totalAmount = values.items.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  const [submitType, setSubmitType] = useState<'Pending' | 'Draft'>('Pending');
 
-    const invoiceToSend = {
-      ...values,
-      items: values.items.map(item => ({
-        ...item,
-        total: item.quantity * item.price,
-      })),
-      totalAmount,
-    };
+  // Handle form submission
+  const handleSubmit = async (values: initialInvoice) => {
+    try {
+      const totalAmount = values.items.reduce((sum, item) => sum + item.quantity * item.price, 0);
 
-    console.log(invoiceToSend);
+      const invoiceToSend = {
+        ...values,
+        items: values.items.map(item => ({
+          ...item,
+          total: item.quantity * item.price,
+        })),
+        totalAmount,
+      };
+
+      await createInvoice(invoiceToSend, submitType);
+      toast.success(
+        `Invoice ${submitType === 'Draft' ? 'saved as draft' : 'created successfully'}!`
+      );
+      router.push('/invoices');
+
+      console.log(invoiceToSend);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  // Custom styles for react-select
   const customSelectStyles: StylesConfig<PaymentOption, false> = {
     control: (base: CSSObjectWithLabel, state: ControlProps<PaymentOption, false>) => ({
       ...base,
@@ -233,7 +257,7 @@ export default function CreateInvoice() {
         <h1 className={css.title}>New Invoice</h1>
         <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={formSchema}>
           {({ isSubmitting, setFieldValue, values }) => (
-            <Form className={css.form}>
+            <Form id="invoiceForm" className={css.form}>
               {/* Bill From */}
               <fieldset className={css.form__group}>
                 <legend className={css.form__legend}>Bill From</legend>
@@ -515,11 +539,36 @@ export default function CreateInvoice() {
                   )}
                 </FieldArray>
               </fieldset>
-              <button type="submit">Send</button>
             </Form>
           )}
         </Formik>
       </Container>
+      <div className={css.buttonPanel}>
+        <Link
+          className={`${css.buttonPanel__discard} ${css.buttonPanel__button}`}
+          href={`/invoices/`}
+        >
+          Discard
+        </Link>
+
+        <button
+          className={`${css.buttonPanel__draft} ${css.buttonPanel__button}`}
+          name="action"
+          type="submit"
+          form="invoiceForm"
+          onClick={() => setSubmitType('Draft')}
+        >
+          Save as Draft
+        </button>
+        <button
+          className={`${css.buttonPanel__save} ${css.buttonPanel__button}`}
+          type="submit"
+          form="invoiceForm"
+          onClick={() => setSubmitType('Pending')}
+        >
+          Save & Send
+        </button>
+      </div>
     </main>
   );
 }

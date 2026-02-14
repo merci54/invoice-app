@@ -2,6 +2,7 @@
 
 import { connectMongoDB } from '@/lib/db/connectMongoDB';
 import { Invoice } from '@/lib/models/invoice';
+import { CreateInvoiceProps, InvoiceStatus } from '@/types/invoice';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -23,4 +24,18 @@ export async function deleteInvoice(invoiceId: string) {
 
   revalidatePath('/invoices');
   redirect('/invoices');
+}
+
+export async function createInvoice(
+  invoice: CreateInvoiceProps,
+  status: InvoiceStatus = 'Pending'
+) {
+  await connectMongoDB();
+
+  await Invoice.create({
+    ...invoice,
+    status,
+  });
+
+  revalidatePath('/invoices');
 }
