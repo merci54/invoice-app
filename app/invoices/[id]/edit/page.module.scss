@@ -41,24 +41,17 @@
   box-shadow: 0px -20px 40px rgba(0, 0, 0, 0.08);
 
   &__discard {
-    flex: 84;
+    flex: 96;
 
     color: var(--color-07);
     background-color: #f9fafe;
   }
 
-  &__draft {
-    flex: 117;
-
-    background-color: #373b53;
-    color: var(--color-06);
-  }
-
   &__save {
-    flex: 112;
+    flex: 138;
 
-    color: white;
     background-color: var(--color-01);
+    color: #fff;
   }
 
   &__button {

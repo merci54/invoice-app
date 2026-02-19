@@ -39,3 +39,13 @@ export async function createInvoice(
 
   revalidatePath('/invoices');
 }
+
+export async function editInvoice(invoiceId: string, updatedInvoice: CreateInvoiceProps) {
+  await connectMongoDB();
+
+  await Invoice.findByIdAndUpdate(invoiceId, updatedInvoice, {
+    new: true,
+  });
+
+  revalidatePath('/invoices');
+}

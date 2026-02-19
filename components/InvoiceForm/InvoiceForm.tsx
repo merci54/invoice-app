@@ -9,9 +9,6 @@ import { format } from 'date-fns';
 import Select, { CSSObjectWithLabel, ControlProps, OptionProps, StylesConfig } from 'react-select';
 import * as Yup from 'yup';
 import { initialInvoice } from '@/types/invoice';
-import { createInvoice } from '@/lib/actions/invoice';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 
 type PaymentOption = {
   value: number;
@@ -19,8 +16,9 @@ type PaymentOption = {
 };
 
 interface InvoiceFormProps {
-  submitType: 'Draft' | 'Pending';
-  isCreateInvoice: boolean;
+  initialValues: initialInvoice;
+  onSubmit: (values: initialInvoice) => Promise<void>;
+  isCreateInvoice?: boolean;
 }
 
 const formSchema = Yup.object({
@@ -61,41 +59,7 @@ const formSchema = Yup.object({
     .min(1, 'At least one item is required'),
 });
 
-export function InvoiceForm({ submitType, isCreateInvoice }: InvoiceFormProps) {
-  const router = useRouter();
-
-  // Initial Values for Formik
-  const initialValues: initialInvoice = {
-    billFrom: {
-      street: '17 Rue Berthe Morisot',
-      city: 'Reims',
-      postCode: '51100',
-      country: 'France',
-    },
-
-    clientName: 'Yaroslav',
-    clientEmail: 'yaroslavlit@gmail.com',
-
-    billTo: {
-      street: '18 rue Lenina',
-      city: 'Paris',
-      postCode: '51000',
-      country: 'France',
-    },
-
-    invoiceDate: '',
-    paymentTerms: 1,
-    projectDescription: 'Important Invoice',
-    items: [
-      {
-        name: 'Banner Design',
-        quantity: 1,
-        price: 156,
-        total: 156,
-      },
-    ],
-  };
-
+export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: InvoiceFormProps) {
   // State for calendar visibility
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -109,6 +73,10 @@ export function InvoiceForm({ submitType, isCreateInvoice }: InvoiceFormProps) {
     { value: 14, label: 'Net 14 Days' },
     { value: 30, label: 'Net 30 Days' },
   ];
+
+  function normalizeDateToUTC(date: Date) {
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString();
+  }
 
   // Effect to handle clicks outside the calendar to close it
   useEffect(() => {
@@ -126,31 +94,6 @@ export function InvoiceForm({ submitType, isCreateInvoice }: InvoiceFormProps) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showCalendar]);
-
-  const handleSubmit = async (values: initialInvoice) => {
-    try {
-      const totalAmount = values.items.reduce((sum, item) => sum + item.quantity * item.price, 0);
-
-      const invoiceToSend = {
-        ...values,
-        items: values.items.map(item => ({
-          ...item,
-          total: item.quantity * item.price,
-        })),
-        totalAmount,
-      };
-
-      await createInvoice(invoiceToSend, submitType);
-      toast.success(
-        `Invoice ${submitType === 'Draft' ? 'saved as draft' : 'created successfully'}!`
-      );
-      router.push('/invoices');
-
-      console.log(invoiceToSend);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // Custom styles for react-select
   const customSelectStyles: StylesConfig<PaymentOption, false> = {
@@ -232,7 +175,12 @@ export function InvoiceForm({ submitType, isCreateInvoice }: InvoiceFormProps) {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={formSchema}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={formSchema}
+      enableReinitialize
+    >
       {({ setFieldValue, values }) => (
         <Form id="invoiceForm" className={css.form}>
           {/* Bill From */}
@@ -325,7 +273,7 @@ export function InvoiceForm({ submitType, isCreateInvoice }: InvoiceFormProps) {
             </label>
           </fieldset>
 
-          {/* Calendar */}
+          {/* Calendar and Picker */}
           <fieldset className={css.form__group}>
             <div className={css.calendar} ref={calendarRef}>
               <label className={css.form__label} htmlFor="invoiceDate">
@@ -406,10 +354,12 @@ export function InvoiceForm({ submitType, isCreateInvoice }: InvoiceFormProps) {
                     showOutsideDays
                     selected={values.invoiceDate ? new Date(values.invoiceDate) : undefined}
                     onSelect={date => {
-                      if (date) {
-                        setFieldValue('invoiceDate', date.toISOString());
-                        setShowCalendar(false);
-                      }
+                      if (!date) return;
+
+                      const isoDate = normalizeDateToUTC(date);
+
+                      setFieldValue('invoiceDate', isoDate);
+                      setShowCalendar(false);
                     }}
                     formatters={{
                       formatCaption: date => format(date, 'MMM yyyy'),
@@ -419,6 +369,7 @@ export function InvoiceForm({ submitType, isCreateInvoice }: InvoiceFormProps) {
               )}
             </div>
 
+            {/* Payment Terms picker */}
             <div className={css.select}>
               <label className={css.form__label} htmlFor="paymentTerms">
                 Payment Terms
@@ -443,9 +394,10 @@ export function InvoiceForm({ submitType, isCreateInvoice }: InvoiceFormProps) {
               />
             </label>
           </fieldset>
+
+          {/* Items List */}
           <fieldset className={css.items}>
             <legend className={css.items__legend}>Item List</legend>
-
             <FieldArray name="items">
               {({ push, remove }) => (
                 <>
