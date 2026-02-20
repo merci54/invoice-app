@@ -1,20 +1,24 @@
 import Image from 'next/image';
 import css from './Header.module.scss';
+import Link from 'next/link';
 
 export default function Header() {
   return (
     <header className={css.header}>
       <div className={css.wrapper}>
-        <div className={css.logoBlock}>
-          <div className={css.logoBlock__mask}></div>
-          <Image
-            className={css.logoBlock__img}
-            src={'/icons/logo.svg'}
-            alt="logo image"
-            width={28}
-            height={27.58}
-          />
-        </div>
+        <Link href={'/invoices'}>
+          <div className={css.logoBlock}>
+            <div className={css.logoBlock__mask}></div>
+            <Image
+              className={css.logoBlock__img}
+              src={'/icons/logo.svg'}
+              alt="logo image"
+              width={28}
+              height={27.58}
+            />
+          </div>
+        </Link>
+
         <div className={css.menuBlock}>
           <button className={css.menuBlock__themeIcon}>
             <Image
