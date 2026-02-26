@@ -100,13 +100,13 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
     control: (base: CSSObjectWithLabel, state: ControlProps<PaymentOption, false>) => ({
       ...base,
       borderRadius: '4px',
-      border: state.isFocused ? '1px solid var(--color-02)' : '1px solid var(--color-05)',
+      border: state.isFocused ? '1px solid var(--color-02)' : '1px solid var(--input-border)',
       padding: '14px 20px 14px 20px',
-      backgroundColor: '#fff',
+      backgroundColor: 'var(--input-bg)',
       boxShadow: 'none',
       cursor: 'pointer',
       '&:hover': {
-        border: state.isFocused ? '1px solid var(--color-02)' : '1px solid var(--color-05)',
+        border: state.isFocused ? '1px solid var(--color-02)' : '1px solid var(--input-border)',
       },
     }),
     valueContainer: (base: CSSObjectWithLabel) => ({
@@ -117,14 +117,14 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
       ...base,
       fontSize: '15px',
       fontWeight: 700,
-      color: 'var(--color-08)',
+      color: 'var(--text)',
       margin: 0,
     }),
     placeholder: (base: CSSObjectWithLabel) => ({
       ...base,
       fontSize: '15px',
       fontWeight: 700,
-      color: 'var(--color-08)',
+      color: 'var(--text)',
       margin: 0,
     }),
     input: (base: CSSObjectWithLabel) => ({
@@ -159,11 +159,11 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
       ...base,
       fontSize: '15px',
       fontWeight: 700,
-      color: state.isSelected ? 'var(--color-01)' : 'var(--color-08)',
-      backgroundColor: '#fff',
+      color: state.isSelected ? 'var(--color-01)' : 'var(--custom-text)',
+      backgroundColor: 'var(--input-bg)',
       padding: '17px 24px 16px 24px',
       cursor: 'pointer',
-      borderBottom: '1px solid var(--color-05)',
+      borderBottom: '1px solid var(--input-border)',
       '&:hover': {
         color: 'var(--color-01)',
         backgroundColor: '#fff',

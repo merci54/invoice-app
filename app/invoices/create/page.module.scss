@@ -26,7 +26,7 @@
 
   padding: 21px 24px;
 
-  background-color: #fff;
+  background-color: var(--card-bg);
   min-height: 91px;
 
   display: flex;
@@ -39,15 +39,15 @@
   &__discard {
     flex: 84;
 
-    color: var(--color-07);
-    background-color: #f9fafe;
+    color: var(--leftbtn-text);
+    background-color: var(--leftbtn-bg);
   }
 
   &__draft {
     flex: 117;
 
     background-color: #373b53;
-    color: var(--color-06);
+    color: var(--subtext);
   }
 
   &__save {

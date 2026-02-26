@@ -37,17 +37,17 @@
     flex-direction: column;
     gap: 9px;
 
-    color: var(--color-07);
+    color: var(--items-subtext);
     @include Body-2;
   }
 
   &__input {
     border-radius: 4px;
-    border: 1px solid var(--color-05);
+    border: 1px solid var(--input-border);
     padding: 18px 20px 15px 20px;
-    background-color: #fff;
+    background-color: var(--input-bg);
     @include Heading-S-2;
-    color: var(--color-08);
+    color: var(--text);
   }
 
   &__input::placeholder {
@@ -73,11 +73,11 @@
 
   &__input {
     border-radius: 4px;
-    border: 1px solid var(--color-05);
+    border: 1px solid var(--iinput-border);
     padding: 16px 20px 15px 20px;
-    background-color: #fff;
+    background-color: var(--input-bg);
     @include Heading-S-2;
-    color: var(--color-08);
+    color: var(--text);
   }
 
   &__input.active {
@@ -107,7 +107,8 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: var(--color-11, #fff);
+  background: var(--custom-bg);
+  color: var(--custom-text);
   border-radius: 8px;
   box-shadow: 0px 10px 20px 0px rgba(72, 84, 159, 0.25);
   padding: 26px 18.5px 31px 19.5px;
@@ -208,8 +209,8 @@
 
   &__add {
     padding: 18px 0 15px 0;
-    color: var(--color-07);
-    background-color: #f0f3fc;
+    color: var(--items-subtext);
+    background-color: var(--addbtn-bg);
 
     border-radius: 24px;
     text-align: center;

@@ -30,8 +30,9 @@
     --items-subtext: var(--color-07);
 
     --invoice-text: var(--color-07);
-    --editbtn-bg: var(--color-11);
-    --editbtn-text: var(--color-07);
+    --leftbtn-bg: var(--color-11);
+    --leftbtn-text: var(--color-07);
+    --addbtn-bg: #f0f3fc;
 
     --bg: var(--color-11);
     --card-bg: #ffffff;
@@ -39,6 +40,12 @@
 
     --draft-text: rgba(55, 59, 83, 1);
     --draft-bg: rgba(55, 59, 83, 0.057);
+
+    --input-bg: #ffffff;
+    --input-border: var(--color-05);
+
+    --custom-bg: #ffffff;
+    --custom-text: var(--color-08);
   }
 
   &.dark {
@@ -50,8 +57,9 @@
     --items-subtext: var(--color-06);
 
     --invoice-text: var(--color-05);
-    --editbtn-bg: var(--color-04);
-    --editbtn-text: var(--color-05);
+    --leftbtn-bg: var(--color-04);
+    --leftbtn-text: var(--color-05);
+    --addbtn-bg: var(--color-04);
 
     --bg: var(--color-12);
     --card-bg: var(--color-03);
@@ -59,6 +67,12 @@
 
     --draft-text: rgba(223, 227, 250, 1);
     --draft-bg: rgba(223, 227, 250, 0.057);
+
+    --input-bg: var(--color-03);
+    --input-border: var(--color-04);
+
+    --custom-bg: var(--color-03);
+    --custom-text: var(--color-05);
   }
 }
 

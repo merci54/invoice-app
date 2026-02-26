@@ -30,7 +30,7 @@
 
   padding: 21px 24px;
 
-  background-color: #fff;
+  background-color: var(--card-bg);
   min-height: 91px;
 
   display: flex;
@@ -43,8 +43,8 @@
   &__discard {
     flex: 96;
 
-    color: var(--color-07);
-    background-color: #f9fafe;
+    color: var(--leftbtn-text);
+    background-color: var(--leftbtn-bg);
   }
 
   &__save {
