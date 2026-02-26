@@ -23,13 +23,13 @@
 
   padding: 24px 24px 27px 24px;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: var(--card-bg);
 
   margin-bottom: 16px;
 
   &__text {
     @include Body-2;
-    color: #858bb2;
+    color: var(--subtext);
   }
 
   &__badge {
@@ -48,24 +48,24 @@
   }
 
   &__paid {
-    background-color: var(--green-bg);
-    color: var(--green);
+    background-color: var(--paid-bg);
+    color: var(--paid-text);
   }
 
   &__pending {
-    background-color: var(--orange-bg);
-    color: var(--orange);
+    background-color: var(--pend-bg);
+    color: var(--pend-text);
   }
 
   &__draft {
-    background-color: var(--black-bg);
-    color: var(--black);
+    background-color: var(--draft-bg);
+    color: var(--draft-text);
   }
 }
 
 .content {
   border-radius: 8px;
-  background-color: #fff;
+  background-color: var(--card-bg);
   padding: 24px;
 
   display: flex;
@@ -93,7 +93,7 @@
     flex-direction: column;
     gap: 13px;
 
-    margin-bottom: 38px;
+    margin-bottom: 8px;
   }
 }
 
@@ -103,7 +103,7 @@
 
 .text {
   @include Body-2;
-  color: var(--color-07);
+  color: var(--invoice-text);
 }
 
 .date {
@@ -114,7 +114,7 @@
   &__text {
     margin-bottom: 13px;
     @include Body-2;
-    color: var(--color-07);
+    color: var(--invoice-text);
   }
 
   &__title {
@@ -126,7 +126,7 @@
   &__title {
     margin-bottom: 13px;
     @include Body-2;
-    color: var(--color-07);
+    color: var(--invoice-text);
   }
 
   &__name {
@@ -151,7 +151,7 @@
   overflow: hidden;
 
   &__items {
-    background-color: #f9fafe;
+    background-color: var(--items-bg);
     padding: 24px;
   }
   &__list {
@@ -177,11 +177,11 @@
 
   &__itemTotalPrice {
     @include Heading-S-2;
-    color: var(--color-08);
+    color: var(--text);
   }
 
   &__total {
-    background-color: #373b53;
+    background-color: var(--items-totalbg);
     padding: 26px 24px 22px 24px;
 
     display: flex;
@@ -208,7 +208,7 @@
 
   padding: 21px 24px;
 
-  background-color: #fff;
+  background-color: var(--card-bg);
   min-height: 91px;
 
   display: flex;
@@ -219,8 +219,8 @@
   &__edit {
     flex: 73;
 
-    color: #7e88c3;
-    background-color: #f9fafe;
+    color: var(--editbtn-text);
+    background-color: var(--editbtn-bg);
   }
 
   &__delete {

@@ -1,28 +1,66 @@
 :root {
-  --color-01: #7C5DFA;
-  --color-02: #9277FF;
-  --color-03: #1E2139;
+  --color-01: #7c5dfa;
+  --color-02: #9277ff;
+  --color-03: #1e2139;
   --color-04: #252945;
-  --color-05: #DFE3FA;
-  --color-06: #888EB0;
-  --color-07: #7E88C3;
-  --color-08: #0C0E16;
-  --color-09: #EC5757;
-  --color-10: #9277FF;
-  --color-11: #F8F8FB;
+  --color-05: #dfe3fa;
+  --color-06: #888eb0;
+  --color-07: #7e88c3;
+  --color-08: #0c0e16;
+  --color-09: #ec5757;
+  --color-10: #9277ff;
+  --color-11: #f8f8fb;
   --color-12: #141625;
 
-  --green: #33D69F;
-  --green-bg: #33d69f0f;
+  --hash: var(--color-07);
+  --primary: var(--color-01);
 
-  --orange: #FF8F00;
-  --orange-bg: #ff8f000f;
+  --paid-text: rgba(51, 214, 159, 1);
+  --paid-bg: rgba(51, 214, 159, 0.057);
 
-  --black: #373B53;
-  --black-bg: #373b530f;
-  
+  --pend-text: rgba(255, 143, 0, 1);
+  --pend-bg: rgba(255, 143, 0, 0.057);
+
+  &.light {
+    --text: var(--color-08);
+    --subtext: var(--color-06);
+
+    --items-bg: #f9fafe;
+    --items-totalbg: #373b53;
+    --items-subtext: var(--color-07);
+
+    --invoice-text: var(--color-07);
+    --editbtn-bg: var(--color-11);
+    --editbtn-text: var(--color-07);
+
+    --bg: var(--color-11);
+    --card-bg: #ffffff;
+    --card-name: #858bb2;
+
+    --draft-text: rgba(55, 59, 83, 1);
+    --draft-bg: rgba(55, 59, 83, 0.057);
+  }
+
+  &.dark {
+    --text: #ffffff;
+    --subtext: var(--color-05);
+
+    --items-bg: var(--color-04);
+    --items-totalbg: var(--color-08);
+    --items-subtext: var(--color-06);
+
+    --invoice-text: var(--color-05);
+    --editbtn-bg: var(--color-04);
+    --editbtn-text: var(--color-05);
+
+    --bg: var(--color-12);
+    --card-bg: var(--color-03);
+    --card-name: #ffffff;
+
+    --draft-text: rgba(223, 227, 250, 1);
+    --draft-bg: rgba(223, 227, 250, 0.057);
+  }
 }
-
 
 html,
 body {
@@ -31,10 +69,9 @@ body {
 }
 
 body {
-  font-family: "League Spartan", sans-serif;
-  background-color: var(--color-11);
-  color: var(--color-08);
-
+  font-family: 'League Spartan', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 * {
@@ -54,7 +91,7 @@ button {
   border: none;
   margin: 0;
   padding: 0;
-  
+
   cursor: pointer;
 }
 
@@ -63,10 +100,14 @@ img {
   max-width: 100%;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
