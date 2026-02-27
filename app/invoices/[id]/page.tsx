@@ -21,6 +21,7 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
   const { delete: deleteParam } = searchParams ? await searchParams : {};
 
   const isDeleteOpen = deleteParam === '1';
+  if (!invoice) return <p>Not found</p>;
 
   return (
     <main className={css.main}>
@@ -49,9 +50,7 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
 
         <div className={css.status}>
           <span className={css.status__text}>Status</span>
-          <div
-            className={`${css.status__badge} ${css[`status__${invoice?.status.toLowerCase()}`]}`}
-          >
+          <div className={`${css.status__badge} ${css[`status__${invoice.status.toLowerCase()}`]}`}>
             <svg
               width="8"
               height="8"
@@ -65,18 +64,18 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
                 cy="4"
                 r="4"
                 fill={
-                  invoice?.status === 'Paid'
-                    ? '#33D69F'
-                    : invoice?.status === 'Draft'
-                      ? '#373B53'
-                      : invoice?.status === 'Pending'
-                        ? '#FF8F00'
-                        : '#62005c'
+                  invoice.status === 'Paid'
+                    ? 'var(--paid-text)'
+                    : invoice.status === 'Draft'
+                      ? 'var(--draft-text)'
+                      : invoice.status === 'Pending'
+                        ? 'var(--pend-text)'
+                        : 'var(--draft-text)'
                 }
               />
             </svg>
 
-            <span className={css.status__st}>{invoice?.status}</span>
+            <span className={css.status__st}>{invoice.status}</span>
           </div>
         </div>
 
@@ -86,41 +85,41 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
               <span className={css.text}>#</span>
               {invoice?.invoiceNumber}
             </h2>
-            <span className={css.text}>{invoice?.projectDescription}</span>
+            <span className={css.text}>{invoice.projectDescription}</span>
           </div>
           <div className={css.content__billFrom}>
-            <p className={css.text}>{invoice?.billFrom.street}</p>
-            <p className={css.text}>{invoice?.billFrom.city}</p>
-            <p className={css.text}>{invoice?.billFrom.postCode}</p>
-            <p className={css.text}>{invoice?.billFrom.country}</p>
+            <p className={css.text}>{invoice.billFrom.street}</p>
+            <p className={css.text}>{invoice.billFrom.city}</p>
+            <p className={css.text}>{invoice.billFrom.postCode}</p>
+            <p className={css.text}>{invoice.billFrom.country}</p>
           </div>
           <div className={css.content__info}>
             <div className={css.date}>
               <div className={css.date__create}>
                 <p className={css.date__text}>Invoice Date</p>
-                <p className={css.date__title}>{formatDate(invoice?.invoiceDate)}</p>
+                <p className={css.date__title}>{formatDate(invoice.invoiceDate)}</p>
               </div>
               <div className={css.date__term}>
                 <p className={css.date__text}>Payment Due</p>
                 <p className={css.date__title}>
-                  {formatDueDate(invoice?.invoiceDate, invoice?.paymentTerms)}
+                  {formatDueDate(invoice.invoiceDate, invoice.paymentTerms)}
                 </p>
               </div>
             </div>
             <div className={css.billTo}>
               <p className={css.billTo__title}>Bill To</p>
-              <p className={css.billTo__name}>{invoice?.clientName}</p>
+              <p className={css.billTo__name}>{invoice.clientName}</p>
               <div className={css.billTo__info}>
-                <p className={css.text}>{invoice?.billTo.street}</p>
-                <p className={css.text}>{invoice?.billTo.city}</p>
-                <p className={css.text}>{invoice?.billTo.postCode}</p>
-                <p className={css.text}>{invoice?.billTo.country}</p>
+                <p className={css.text}>{invoice.billTo.street}</p>
+                <p className={css.text}>{invoice.billTo.city}</p>
+                <p className={css.text}>{invoice.billTo.postCode}</p>
+                <p className={css.text}>{invoice.billTo.country}</p>
               </div>
             </div>
           </div>
           <div className={css.content__sentTo}>
             <p className={css.text}>Sent To</p>
-            <p className={css.title}>{invoice?.clientEmail}</p>
+            <p className={css.title}>{invoice.clientEmail}</p>
           </div>
           <div className={css.amount}>
             <div className={css.amount__items}>
@@ -140,7 +139,7 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
             </div>
             <div className={css.amount__total}>
               <p className={css.amount__totalText}>Grand Total</p>
-              <p className={css.amount__totalPrice}>£ {invoice?.totalAmount.toFixed(2)}</p>
+              <p className={css.amount__totalPrice}>£ {invoice.totalAmount.toFixed(2)}</p>
             </div>
           </div>
         </div>
@@ -159,7 +158,7 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
         <PaidButton invoiceId={id} />
       </div>
       {isDeleteOpen && (
-        <DeleteModalClient invoiceId={id} invoiceNumber={invoice?.invoiceNumber || '#RZ2523'} />
+        <DeleteModalClient invoiceId={id} invoiceNumber={invoice.invoiceNumber || '#RZ2523'} />
       )}
     </main>
   );

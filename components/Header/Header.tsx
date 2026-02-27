@@ -43,14 +43,25 @@ export default function Header() {
               <svg
                 width="20"
                 height="20"
-                viewBox="0 0 10 10"
-                fill="none"
+                viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
               >
-                <path
-                  d="M4.91783 0C2.20609 0 0 2.20652 0 4.91826C0 7.63 2.20609 9.83652 4.91783 9.83652C7.62913 9.83652 9.83565 7.63043 9.83565 4.91826C9.83565 2.20609 7.62913 0 4.91783 0Z"
-                  fill="#858BB2"
-                />
+                <circle cx="10" cy="10" r="5" fill="#7E88C3" />
+
+                <g stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                  <line x1="10" y1="1.5" x2="10" y2="3.5" color="#7E88C3" />
+                  <line x1="10" y1="16.5" x2="10" y2="18.5" color="#7E88C3" />
+
+                  <line x1="1.5" y1="10" x2="3.5" y2="10" color="#7E88C3" />
+                  <line x1="16.5" y1="10" x2="18.5" y2="10" color="#7E88C3" />
+
+                  <line x1="4" y1="4" x2="5.5" y2="5.5" color="#7E88C3" />
+                  <line x1="14.5" y1="14.5" x2="16" y2="16" color="#7E88C3" />
+
+                  <line x1="14.5" y1="5.5" x2="16" y2="4" color="#7E88C3" />
+                  <line x1="4" y1="16" x2="5.5" y2="14.5" color="#7E88C3" />
+                </g>
               </svg>
             )}
           </button>

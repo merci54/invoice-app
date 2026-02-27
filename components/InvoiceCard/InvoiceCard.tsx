@@ -25,18 +25,19 @@ export default function InvoiceCard({ invoiceNumber, name, date, sum, status }: 
             xmlns="http://www.w3.org/2000/svg"
           >
             <circle
+              className={css.status__icon}
               opacity="0.8"
               cx="4"
               cy="4"
               r="4"
               fill={
                 status === 'Paid'
-                  ? '#33D69F'
+                  ? 'var(--paid-text)'
                   : status === 'Draft'
-                    ? '#373B53'
+                    ? 'var(--draft-text)'
                     : status === 'Pending'
-                      ? '#FF8F00'
-                      : '#62005c'
+                      ? 'var(--pend-text)'
+                      : 'var(--draft-text)'
               }
             />
           </svg>
