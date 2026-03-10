@@ -23,15 +23,34 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme-storage');
+                  var theme = stored ? JSON.parse(stored).state.theme : 'light';
+                  document.documentElement.classList.add(theme === 'dark' ? 'dark' : 'light');
+                } catch (e) {
+                  document.documentElement.classList.add('light');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={spartan.variable}>
         <ThemeProvider>
-          <div>
-            <Toaster />
-          </div>
+          <div className="app-wrapper">
+            <div>
+              <Toaster />
+            </div>
 
-          <Header />
-          {children}
+            <Header />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
