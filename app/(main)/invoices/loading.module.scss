@@ -1,0 +1,110 @@
+@use '@/app/skeleton';
+
+.main {
+  padding: 32px 0 105px 0;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  @extend .skeleton;
+  width: 100px;
+  height: 22px;
+}
+
+.subtitle {
+  @extend .skeleton;
+  width: 70px;
+  height: 14px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.filterSkeleton {
+  @extend .skeleton;
+  width: 50px;
+  height: 16px;
+}
+
+.buttonSkeleton {
+  @extend .skeleton;
+  width: 90px;
+  height: 44px;
+  border-radius: 24px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  padding: 25px 24px;
+  border-radius: 8px;
+  min-height: 134px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardId {
+  @extend .skeleton;
+  width: 70px;
+  height: 16px;
+}
+
+.cardName {
+  @extend .skeleton;
+  width: 90px;
+  height: 14px;
+}
+
+.cardBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardDate {
+  @extend .skeleton;
+  width: 100px;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.cardSum {
+  @extend .skeleton;
+  width: 80px;
+  height: 18px;
+}
+
+.cardStatus {
+  @extend .skeleton;
+  width: 104px;
+  height: 44px;
+  border-radius: 6px;
+}

@@ -1,0 +1,161 @@
+@use '@/app/skeleton';
+
+.main {
+  padding-top: 32px;
+}
+
+.back {
+  @extend .skeleton;
+  width: 70px;
+  height: 14px;
+  margin-bottom: 31px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px 24px 27px 24px;
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  margin-bottom: 16px;
+}
+
+.statusText {
+  @extend .skeleton;
+  width: 50px;
+  height: 14px;
+}
+
+.statusBadge {
+  @extend .skeleton;
+  width: 104px;
+  height: 44px;
+  border-radius: 6px;
+}
+
+.content {
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.line {
+  @extend .skeleton;
+  height: 14px;
+}
+
+.lineShort {
+  @extend .skeleton;
+  width: 40%;
+  height: 14px;
+}
+
+.lineMd {
+  @extend .skeleton;
+  width: 60%;
+  height: 16px;
+}
+
+.lineLg {
+  @extend .skeleton;
+  width: 80%;
+  height: 18px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addressBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infoRow {
+  display: flex;
+  gap: 62px;
+}
+
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.amountBlock {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.amountItems {
+  background-color: var(--items-bg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.amountRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.amountTotal {
+  background-color: var(--items-totalbg);
+  padding: 26px 24px 22px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amountTotalLabel {
+  @extend .skeleton;
+  width: 80px;
+  height: 14px;
+  opacity: 0.3;
+}
+
+.amountTotalValue {
+  @extend .skeleton;
+  width: 100px;
+  height: 24px;
+  opacity: 0.3;
+}
+
+.buttonPanel {
+  margin-top: 56px;
+  padding: 21px 24px;
+  background-color: var(--card-bg);
+  min-height: 91px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn {
+  @extend .skeleton;
+  height: 48px;
+  border-radius: 24px;
+}
+
+.btnEdit {
+  flex: 73;
+}
+
+.btnDelete {
+  flex: 89;
+}
+
+.btnPaid {
+  flex: 149;
+}
