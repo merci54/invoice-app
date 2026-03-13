@@ -11,7 +11,7 @@ export default function InvoicesList({ invoices }: Props) {
   return (
     <ul className={css.list}>
       {invoices.map(invoice => (
-        <Link key={invoice.id} href={`invoices/${invoice.id}`}>
+        <Link key={invoice.id} href={`/invoices/${invoice.id}`}>
           <InvoiceCard {...invoice} />
         </Link>
       ))}
