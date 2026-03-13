@@ -13,11 +13,12 @@ const InvoiceItemSchema = new Schema(
 const InvoiceSchema = new Schema(
   {
     // ---------- Invoice Owner ----------
-    // userId: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "User",
-    //   required: true,
-    // },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+      index: true,
+    },
 
     // ---------- Humanity ID ----------
     invoiceNumber: {
