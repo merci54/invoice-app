@@ -17,31 +17,31 @@ export default function CreateInvoice() {
   // Initial Values for Formik
   const initialValues: initialInvoice = {
     billFrom: {
-      street: '17 Rue Berthe Morisot',
-      city: 'Reims',
-      postCode: '51100',
-      country: 'France',
+      street: '',
+      city: '',
+      postCode: '',
+      country: '',
     },
 
-    clientName: 'Yaroslav',
-    clientEmail: 'yaroslavlit@gmail.com',
+    clientName: '',
+    clientEmail: '',
 
     billTo: {
-      street: '18 rue Lenina',
-      city: 'Paris',
-      postCode: '51000',
-      country: 'France',
+      street: '',
+      city: '',
+      postCode: '',
+      country: '',
     },
 
     invoiceDate: '',
     paymentTerms: 1,
-    projectDescription: 'Important Invoice',
+    projectDescription: '',
     items: [
       {
-        name: 'Banner Design',
+        name: '',
         quantity: 1,
-        price: 156,
-        total: 156,
+        price: 0,
+        total: 0,
       },
     ],
   };

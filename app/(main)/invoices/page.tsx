@@ -8,6 +8,8 @@ import NothingPage from '@/components/NothingPage/NothingPage';
 import { Invoice as InvoiceDB } from '@/types/invoice';
 import { formatDate } from '@/lib/utils/date';
 import Link from 'next/link';
+import { getCurrentUser } from '@/lib/actions/auth';
+import { redirect } from 'next/navigation';
 
 function mapInvoiceToCard(invoice: InvoiceDB) {
   return {
@@ -21,9 +23,12 @@ function mapInvoiceToCard(invoice: InvoiceDB) {
 }
 
 export default async function InvoicesPage() {
+  const user = await getCurrentUser();
+  if (!user) redirect('/login');
+
   await connectMongoDB();
 
-  const invoices = await Invoice.find().lean<InvoiceDB[]>();
+  const invoices = await Invoice.find({ userId: user.userId }).sort({ createdAt: -1 }).lean<InvoiceDB[]>();
   const cards = invoices.map(mapInvoiceToCard);
   const hasInvoices = cards.length > 0;
 

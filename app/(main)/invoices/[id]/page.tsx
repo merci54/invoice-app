@@ -7,6 +7,8 @@ import Link from 'next/link';
 import PaidButton from '@/components/PaidButton/PaidButton';
 import { formatDate, formatDueDate } from '@/lib/utils/date';
 import DeleteModalClient from './DeleteModalClient';
+import { getCurrentUser } from '@/lib/actions/auth';
+import { redirect } from 'next/navigation';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -14,9 +16,12 @@ interface Props {
 }
 
 export default async function SingleInvoicePage({ params, searchParams }: Props) {
+  const user = await getCurrentUser();
+  if (!user) redirect('/login');
+
   const { id } = await params;
   await connectMongoDB();
-  const invoice = await Invoice.findById(id).lean<InvoiceDB>();
+  const invoice = await Invoice.findOne({ _id: id, userId: user.userId }).lean<InvoiceDB>();
 
   const { delete: deleteParam } = searchParams ? await searchParams : {};
 

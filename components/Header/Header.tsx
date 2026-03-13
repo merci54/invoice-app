@@ -65,9 +65,9 @@ export default function Header() {
               </svg>
             )}
           </button>
-          <div className={css.menuBlock__userIcon}>
+          <Link href="/profile" className={css.menuBlock__userIcon}>
             <Image alt="avatar image" src={'/images/avatar.jpg'} width={32} height={32} />
-          </div>
+          </Link>
         </div>
       </div>
     </header>
