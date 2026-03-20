@@ -5,11 +5,12 @@ import InvoicesList from '@/components/InvoicesList/InvoicesList';
 import { connectMongoDB } from '@/lib/db/connectMongoDB';
 import { Invoice } from '@/lib/models/invoice';
 import NothingPage from '@/components/NothingPage/NothingPage';
-import { Invoice as InvoiceDB } from '@/types/invoice';
+import { Invoice as InvoiceDB, InvoiceStatus } from '@/types/invoice';
 import { formatDate } from '@/lib/utils/date';
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/actions/auth';
 import { redirect } from 'next/navigation';
+import StatusFilter from '@/components/StatusFilter/StatusFilter';
 
 function mapInvoiceToCard(invoice: InvoiceDB) {
   return {
@@ -22,13 +23,32 @@ function mapInvoiceToCard(invoice: InvoiceDB) {
   };
 }
 
-export default async function InvoicesPage() {
+const VALID_STATUSES: InvoiceStatus[] = ['Draft', 'Pending', 'Paid'];
+
+interface Props {
+  searchParams: Promise<{ status?: string | string[] }>;
+}
+
+export default async function InvoicesPage({ searchParams }: Props) {
   const user = await getCurrentUser();
   if (!user) redirect('/login');
 
   await connectMongoDB();
 
-  const invoices = await Invoice.find({ userId: user.userId }).sort({ createdAt: -1 }).lean<InvoiceDB[]>();
+  // Parse status filters from URL
+  const params = await searchParams;
+  const rawStatus = params.status;
+  const statusFilters: InvoiceStatus[] = (
+    Array.isArray(rawStatus) ? rawStatus : rawStatus ? [rawStatus] : []
+  ).filter((s): s is InvoiceStatus => VALID_STATUSES.includes(s as InvoiceStatus));
+
+  // Build query
+  const query: Record<string, unknown> = { userId: user.userId };
+  if (statusFilters.length > 0) {
+    query.status = { $in: statusFilters };
+  }
+
+  const invoices = await Invoice.find(query).sort({ createdAt: -1 }).lean<InvoiceDB[]>();
   const cards = invoices.map(mapInvoiceToCard);
   const hasInvoices = cards.length > 0;
 
@@ -46,23 +66,7 @@ export default async function InvoicesPage() {
             </div>
 
             <div className={css.invoices__actions}>
-              <button className={css.filter}>
-                <p className={css.filter__text}>Filter</p>
-                <svg
-                  className={css.filter__icon}
-                  width="10"
-                  height="7"
-                  viewBox="0 0 10 7"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0.707031 0.707031L4.93493 4.93493L9.16283 0.707031"
-                    stroke="#7C5DFA"
-                    strokeWidth="2"
-                  />
-                </svg>
-              </button>
+              <StatusFilter />
               <Link href={'/invoices/create'} className={css.newInvoice}>
                 <div className={css.newInvoice__icon}>
                   <Image src={'/icons/plus.svg'} alt="plus icon" width={10} height={10} />

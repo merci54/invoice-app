@@ -39,26 +39,6 @@
   }
 }
 
-.filter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-
-  cursor: pointer;
-
-  &__text {
-    color: var(--text);
-    @include Heading-S-2;
-  }
-
-  &:hover {
-    .filter__icon path {
-      stroke: var(--color-02);
-    }
-  }
-}
-
 .newInvoice {
   display: flex;
   gap: 8px;
@@ -89,62 +69,3 @@
     background-color: var(--color-02);
   }
 }
-
-// .invoice {
-//   background-color: #fff;
-//   padding: 25px 24px;
-//   border-radius: 8px;
-
-//   &__top {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-
-//     margin-bottom: 24px;
-//   }
-
-//   &__id {
-//     @include Heading-S-2;
-//   }
-
-//   &__name {
-//     @include Body-2;
-//     color: #858bb2;
-//   }
-
-//   &__low {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//   }
-// }
-
-// .amount {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 9px;
-
-//   &__date {
-//     color: var(--color-06);
-//     @include Body-2;
-//   }
-
-//   &__sum {
-//     @include Heading-S-2;
-//   }
-// }
-
-// .status {
-//   display: flex;
-//   align-items: center;
-//   gap: 8px;
-//   padding: 14px 30px;
-//   background-color: rgba(51, 214, 159, 0.06);
-
-//   border-radius: 6px;
-
-//   &__text {
-//     color: #33d69f;
-//     @include Heading-S-2;
-//   }
-// }

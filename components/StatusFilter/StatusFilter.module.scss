@@ -1,0 +1,89 @@
+@use '@/app/typography' as *;
+
+.filter {
+  position: relative;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  &__text {
+    color: var(--text);
+    @include Heading-S-2;
+  }
+
+  &__icon {
+    transition: transform 0.3s ease;
+  }
+
+  &__iconOpen {
+    transform: rotate(180deg);
+  }
+
+  &__button:hover &__icon path {
+    stroke: var(--color-02);
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 22px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 192px;
+  padding: 24px;
+
+  background-color: var(--custom-bg);
+  border-radius: 8px;
+  box-shadow: 0px 10px 20px 0px rgba(72, 84, 159, 0.25);
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    cursor: pointer;
+  }
+
+  &__checkbox {
+    display: none;
+  }
+
+  &__checkmark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    background-color: var(--input-border);
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  &__checkbox:checked + &__checkmark {
+    background-color: var(--color-01);
+    border-color: var(--color-01);
+  }
+
+  &__item:hover &__checkmark {
+    border-color: var(--color-01);
+  }
+
+  &__label {
+    @include Heading-S-2;
+    color: var(--text);
+  }
+}
