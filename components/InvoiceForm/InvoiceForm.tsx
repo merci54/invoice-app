@@ -1,7 +1,7 @@
 'use client';
 
 import css from './InvoiceForm.module.scss';
-import { Field, FieldArray, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldArray, Form, Formik, getIn } from 'formik';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 import { useState, useRef, useEffect } from 'react';
@@ -58,6 +58,15 @@ const formSchema = Yup.object({
     )
     .min(1, 'At least one item is required'),
 });
+
+/** Helper: returns error class if field is touched & has an error */
+function inputErrorClass(
+  errors: Record<string, unknown>,
+  touched: Record<string, unknown>,
+  name: string
+) {
+  return getIn(touched, name) && getIn(errors, name) ? css.form__inputError : '';
+}
 
 export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: InvoiceFormProps) {
   // State for calendar visibility
@@ -181,16 +190,19 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
       validationSchema={formSchema}
       enableReinitialize
     >
-      {({ setFieldValue, values }) => (
+      {({ setFieldValue, values, errors, touched }) => (
         <Form id="invoiceForm" className={css.form}>
           {/* Bill From */}
           <fieldset className={css.form__group}>
             <legend className={css.form__legend}>Bill From</legend>
 
             <label className={css.form__label} htmlFor="billFrom.street">
-              Street Address
+              <div className={css.form__labelHeader}>
+                <span>Street Address</span>
+                <ErrorMessage name="billFrom.street" component="span" className={css.form__error} />
+              </div>
               <Field
-                className={css.form__input}
+                className={`${css.form__input} ${inputErrorClass(errors, touched, 'billFrom.street')}`}
                 name={'billFrom.street'}
                 placeholder={'19 Union Terrace'}
               />
@@ -198,14 +210,28 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
 
             <div className={css.form__double}>
               <label className={css.form__label} htmlFor="billFrom.city">
-                City
-                <Field className={css.form__input} name={'billFrom.city'} placeholder={'London'} />
+                <div className={css.form__labelHeader}>
+                  <span>City</span>
+                  <ErrorMessage name="billFrom.city" component="span" className={css.form__error} />
+                </div>
+                <Field
+                  className={`${css.form__input} ${inputErrorClass(errors, touched, 'billFrom.city')}`}
+                  name={'billFrom.city'}
+                  placeholder={'London'}
+                />
               </label>
 
               <label className={css.form__label} htmlFor="billFrom.postCode">
-                Post Code
+                <div className={css.form__labelHeader}>
+                  <span>Post Code</span>
+                  <ErrorMessage
+                    name="billFrom.postCode"
+                    component="span"
+                    className={css.form__error}
+                  />
+                </div>
                 <Field
-                  className={css.form__input}
+                  className={`${css.form__input} ${inputErrorClass(errors, touched, 'billFrom.postCode')}`}
                   name={'billFrom.postCode'}
                   placeholder={'E1 3EZ'}
                 />
@@ -213,9 +239,16 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
             </div>
 
             <label className={css.form__label} htmlFor="billFrom.country">
-              Country
+              <div className={css.form__labelHeader}>
+                <span>Country</span>
+                <ErrorMessage
+                  name="billFrom.country"
+                  component="span"
+                  className={css.form__error}
+                />
+              </div>
               <Field
-                className={css.form__input}
+                className={`${css.form__input} ${inputErrorClass(errors, touched, 'billFrom.country')}`}
                 name={'billFrom.country'}
                 placeholder={'United Kingdom'}
               />
@@ -226,13 +259,23 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
           <fieldset className={css.form__group}>
             <legend className={css.form__legend}>Bill To</legend>
             <label className={css.form__label} htmlFor="clientName">
-              Client&apos;s Name
-              <Field className={css.form__input} name={'clientName'} placeholder={'Alex Grim'} />
+              <div className={css.form__labelHeader}>
+                <span>Client&apos;s Name</span>
+                <ErrorMessage name="clientName" component="span" className={css.form__error} />
+              </div>
+              <Field
+                className={`${css.form__input} ${inputErrorClass(errors, touched, 'clientName')}`}
+                name={'clientName'}
+                placeholder={'Alex Grim'}
+              />
             </label>
             <label className={css.form__label} htmlFor="clientEmail">
-              Client&apos;s Email
+              <div className={css.form__labelHeader}>
+                <span>Client&apos;s Email</span>
+                <ErrorMessage name="clientEmail" component="span" className={css.form__error} />
+              </div>
               <Field
-                className={css.form__input}
+                className={`${css.form__input} ${inputErrorClass(errors, touched, 'clientEmail')}`}
                 name={'clientEmail'}
                 placeholder={'alexgrim@mail.com'}
                 type="email"
@@ -240,9 +283,12 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
             </label>
 
             <label className={css.form__label} htmlFor="billTo.street">
-              Street Address
+              <div className={css.form__labelHeader}>
+                <span>Street Address</span>
+                <ErrorMessage name="billTo.street" component="span" className={css.form__error} />
+              </div>
               <Field
-                className={css.form__input}
+                className={`${css.form__input} ${inputErrorClass(errors, touched, 'billTo.street')}`}
                 name={'billTo.street'}
                 placeholder={'84 Church Way'}
               />
@@ -250,23 +296,44 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
 
             <div className={css.form__double}>
               <label className={css.form__label} htmlFor="billTo.city">
-                City
-                <Field className={css.form__input} name={'billTo.city'} placeholder={'London'} />
+                <div className={css.form__labelHeader}>
+                  <span>City</span>
+                  <ErrorMessage name="billTo.city" component="span" className={css.form__error} />
+                </div>
+                <Field
+                  className={`${css.form__input} ${inputErrorClass(errors, touched, 'billTo.city')}`}
+                  name={'billTo.city'}
+                  placeholder={'London'}
+                />
               </label>
 
               <label className={css.form__label} htmlFor="billTo.postCode">
-                Post Code
+                <div className={css.form__labelHeader}>
+                  <span>Post Code</span>
+                  <ErrorMessage
+                    name="billTo.postCode"
+                    component="span"
+                    className={css.form__error}
+                  />
+                </div>
                 <Field
-                  className={css.form__input}
+                  className={`${css.form__input} ${inputErrorClass(errors, touched, 'billTo.postCode')}`}
                   name={'billTo.postCode'}
                   placeholder={'E1 3EZ'}
                 />
               </label>
             </div>
             <label className={css.form__label} htmlFor="billTo.country">
-              Country
+              <div className={css.form__labelHeader}>
+                <span>Country</span>
+                <ErrorMessage
+                  name="billTo.country"
+                  component="span"
+                  className={css.form__error}
+                />
+              </div>
               <Field
-                className={css.form__input}
+                className={`${css.form__input} ${inputErrorClass(errors, touched, 'billTo.country')}`}
                 name={'billTo.country'}
                 placeholder={'United Kingdom'}
               />
@@ -277,11 +344,18 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
           <fieldset className={css.form__group}>
             <div className={css.calendar} ref={calendarRef}>
               <label className={css.form__label} htmlFor="invoiceDate">
-                Invoice Date
+                <div className={css.form__labelHeader}>
+                  <span>Invoice Date</span>
+                  <ErrorMessage name="invoiceDate" component="span" className={css.form__error} />
+                </div>
               </label>
               {isCreateInvoice ? (
                 <div
-                  className={`${css.calendar__input} ${showCalendar ? css.calendar__active : ''}`}
+                  className={`${css.calendar__input} ${showCalendar ? css.calendar__active : ''} ${
+                    getIn(touched, 'invoiceDate') && getIn(errors, 'invoiceDate')
+                      ? css.form__inputError
+                      : ''
+                  }`}
                   onClick={() => setShowCalendar(!showCalendar)}
                   style={{
                     cursor: 'pointer',
@@ -386,9 +460,16 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
             </div>
 
             <label className={css.form__label} htmlFor="projectDescription">
-              Project Description
+              <div className={css.form__labelHeader}>
+                <span>Project Description</span>
+                <ErrorMessage
+                  name="projectDescription"
+                  component="span"
+                  className={css.form__error}
+                />
+              </div>
               <Field
-                className={css.form__input}
+                className={`${css.form__input} ${inputErrorClass(errors, touched, 'projectDescription')}`}
                 name={'projectDescription'}
                 placeholder={'Graphic Design'}
               />
@@ -409,9 +490,16 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
                         <li key={index} className={css.items__item}>
                           {/* Item Name */}
                           <label className={css.items__label}>
-                            Item Name
+                            <div className={css.form__labelHeader}>
+                              <span>Item Name</span>
+                              <ErrorMessage
+                                name={`items[${index}].name`}
+                                component="span"
+                                className={css.form__error}
+                              />
+                            </div>
                             <Field
-                              className={css.form__input}
+                              className={`${css.form__input} ${inputErrorClass(errors, touched, `items[${index}].name`)}`}
                               name={`items[${index}].name`}
                               placeholder="Banner Design"
                             />
@@ -424,7 +512,7 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
                               <label className={`${css.form__label} ${css.items__qtyLabel}`}>
                                 Qty.
                                 <Field
-                                  className={css.form__input}
+                                  className={`${css.form__input} ${inputErrorClass(errors, touched, `items[${index}].quantity`)}`}
                                   type="number"
                                   name={`items[${index}].quantity`}
                                 />
@@ -434,7 +522,7 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
                               <label className={`${css.form__label} ${css.items__priceLabel}`}>
                                 Price
                                 <Field
-                                  className={css.form__input}
+                                  className={`${css.form__input} ${inputErrorClass(errors, touched, `items[${index}].price`)}`}
                                   type="number"
                                   name={`items[${index}].price`}
                                 />
@@ -471,6 +559,11 @@ export function InvoiceForm({ initialValues, onSubmit, isCreateInvoice }: Invoic
                       );
                     })}
                   </ul>
+
+                  {/* Items array-level error (e.g. "At least one item is required") */}
+                  {typeof errors.items === 'string' && (
+                    <p className={css.items__error}>{errors.items}</p>
+                  )}
 
                   {/* Add New Item */}
                   <button

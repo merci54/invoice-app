@@ -20,10 +20,7 @@ export default async function EditPage({ params }: Props) {
 
   if (!invoiceDoc) return <p>Not found</p>;
 
-  const invoice = {
-    ...invoiceDoc,
-    _id: invoiceDoc._id.toString(),
-  };
+  const invoice: InvoiceDB = JSON.parse(JSON.stringify(invoiceDoc));
 
   return <EditPageClient invoice={invoice} />;
 }

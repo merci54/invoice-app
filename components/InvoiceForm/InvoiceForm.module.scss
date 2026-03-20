@@ -63,6 +63,22 @@
     border: 1px solid var(--color-02);
     outline: none;
   }
+
+  &__inputError {
+    border-color: var(--color-09) !important;
+  }
+
+  &__error {
+    font-size: 12px;
+    color: var(--color-09);
+    margin-top: 0;
+  }
+
+  &__labelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .calendar {
@@ -247,5 +263,11 @@
 
   &__add:hover {
     background-color: #dfe3fa;
+  }
+
+  &__error {
+    font-size: 12px;
+    color: var(--color-09);
+    margin-top: 8px;
   }
 }
