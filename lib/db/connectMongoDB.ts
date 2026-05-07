@@ -24,7 +24,12 @@ export async function connectMongoDB() {
 
   if (!cached.promise) {
     cached.promise = mongoose
-      .connect(MONGO_URL)
+      .connect(MONGO_URL, {
+        bufferCommands: false,
+        maxPoolSize: 5,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 30000,
+      })
       .then((mongoose) => {
         console.log("✅ MongoDB connected");
         return mongoose;

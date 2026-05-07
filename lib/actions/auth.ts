@@ -7,6 +7,7 @@ import { createSession, deleteSession, getSession } from "@/lib/auth/session";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import mongoose from "mongoose";
+import { after } from "next/server";
 
 export interface AuthResult {
   error?: string;
@@ -69,11 +70,10 @@ export async function login(
 }
 
 export async function loginAsDemo() {
-  await connectMongoDB();
-
   const demoObjectId = new mongoose.Types.ObjectId();
   const demoUserId = demoObjectId.toString();
 
+  // Session creation doesn't need DB — run independently
   await createSession({
     userId: demoUserId,
     name: "Demo User",
@@ -81,7 +81,7 @@ export async function loginAsDemo() {
     isDemo: true,
   });
 
-  // Seed sample invoices for this demo user
+  // Seed invoices in the background after response is sent
   const now = new Date();
 
   // Generate unique invoice numbers for this demo session
@@ -180,7 +180,10 @@ export async function loginAsDemo() {
     },
   ];
 
-  await Invoice.insertMany(sampleInvoices);
+  after(async () => {
+    await connectMongoDB();
+    await Invoice.insertMany(sampleInvoices);
+  });
 
   redirect("/invoices");
 }
