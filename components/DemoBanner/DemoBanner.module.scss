@@ -1,0 +1,41 @@
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 20px;
+  background: rgba(51, 214, 159, 0.1);
+  border-bottom: 1px solid rgba(51, 214, 159, 0.2);
+  color: var(--paid-text);
+  font-size: 12px;
+  font-weight: 600;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__icon {
+    font-size: 13px;
+  }
+
+  &__text {
+    letter-spacing: 0.3px;
+  }
+
+  &__exit {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-09);
+    background: rgba(236, 87, 87, 0.08);
+    padding: 4px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border: none;
+
+    &:hover {
+      background: rgba(236, 87, 87, 0.15);
+    }
+  }
+}
