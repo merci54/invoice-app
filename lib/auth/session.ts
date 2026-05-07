@@ -10,9 +10,10 @@ export async function createSession(user: UserSession) {
     userId: user.userId,
     name: user.name,
     email: user.email,
+    ...(user.isDemo ? { isDemo: true } : {}),
   })
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("30d")
+    .setExpirationTime(user.isDemo ? "1d" : "30d")
     .sign(JWT_SECRET);
 
   const cookieStore = await cookies();
@@ -37,6 +38,7 @@ export async function getSession(): Promise<UserSession | null> {
       userId: payload.userId as string,
       name: payload.name as string,
       email: payload.email as string,
+      ...(payload.isDemo ? { isDemo: true } : {}),
     };
   } catch {
     return null;

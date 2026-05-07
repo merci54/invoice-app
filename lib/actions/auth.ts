@@ -2,9 +2,11 @@
 
 import { connectMongoDB } from "@/lib/db/connectMongoDB";
 import { User } from "@/lib/models/user";
+import { Invoice } from "@/lib/models/invoice";
 import { createSession, deleteSession, getSession } from "@/lib/auth/session";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
+import mongoose from "mongoose";
 
 export interface AuthResult {
   error?: string;
@@ -66,9 +68,134 @@ export async function login(
   redirect("/invoices");
 }
 
+export async function loginAsDemo() {
+  await connectMongoDB();
+
+  const demoObjectId = new mongoose.Types.ObjectId();
+  const demoUserId = demoObjectId.toString();
+
+  await createSession({
+    userId: demoUserId,
+    name: "Demo User",
+    email: "demo@example.com",
+    isDemo: true,
+  });
+
+  // Seed sample invoices for this demo user
+  const now = new Date();
+
+  // Generate unique invoice numbers for this demo session
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const randInvNum = () => {
+    const l1 = letters[Math.floor(Math.random() * 26)];
+    const l2 = letters[Math.floor(Math.random() * 26)];
+    const nums = Math.floor(1000 + Math.random() * 9000);
+    return `${l1}${l2}${nums}`;
+  };
+
+  const sampleInvoices = [
+    {
+      userId: demoObjectId,
+      invoiceNumber: randInvNum(),
+      billFrom: {
+        street: "19 Union Terrace",
+        city: "London",
+        postCode: "E1 3EZ",
+        country: "United Kingdom",
+      },
+      clientName: "Jensen Huang",
+      clientEmail: "jensenh@mail.com",
+      billTo: {
+        street: "106 Kendell Street",
+        city: "Sharrington",
+        postCode: "NR24 5WQ",
+        country: "United Kingdom",
+      },
+      invoiceDate: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000),
+      paymentTerms: 30,
+      projectDescription: "Logo Design",
+      items: [
+        { name: "Logo Sketches", quantity: 1, price: 500.00, total: 500.00 },
+        { name: "Brand Mark", quantity: 1, price: 800.90, total: 800.90 },
+        { name: "Style Guide", quantity: 1, price: 500.00, total: 500.00 },
+      ],
+      totalAmount: 1800.90,
+      status: "Paid",
+    },
+    {
+      userId: demoObjectId,
+      invoiceNumber: randInvNum(),
+      billFrom: {
+        street: "19 Union Terrace",
+        city: "London",
+        postCode: "E1 3EZ",
+        country: "United Kingdom",
+      },
+      clientName: "Alex Grim",
+      clientEmail: "alexgrim@mail.com",
+      billTo: {
+        street: "84 Church Way",
+        city: "Bradford",
+        postCode: "BD1 9PB",
+        country: "United Kingdom",
+      },
+      invoiceDate: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000),
+      paymentTerms: 30,
+      projectDescription: "Website Redesign",
+      items: [
+        { name: "Website Design", quantity: 1, price: 3500.00, total: 3500.00 },
+        { name: "Development", quantity: 2, price: 1000.00, total: 2000.00 },
+        { name: "SEO Optimization", quantity: 1, price: 655.91, total: 655.91 },
+      ],
+      totalAmount: 6155.91,
+      status: "Pending",
+    },
+    {
+      userId: demoObjectId,
+      invoiceNumber: randInvNum(),
+      billFrom: {
+        street: "19 Union Terrace",
+        city: "London",
+        postCode: "E1 3EZ",
+        country: "United Kingdom",
+      },
+      clientName: "Alysa Werner",
+      clientEmail: "alysa@email.co.uk",
+      billTo: {
+        street: "63 Warwick Road",
+        city: "Carlisle",
+        postCode: "CA20 2TG",
+        country: "United Kingdom",
+      },
+      invoiceDate: now,
+      paymentTerms: 14,
+      projectDescription: "Brand Guidelines",
+      items: [
+        { name: "Brand Research", quantity: 1, price: 1200.00, total: 1200.00 },
+        { name: "Visual Identity", quantity: 1, price: 1402.04, total: 1402.04 },
+        { name: "Guidelines Doc", quantity: 1, price: 500.00, total: 500.00 },
+      ],
+      totalAmount: 3102.04,
+      status: "Draft",
+    },
+  ];
+
+  await Invoice.insertMany(sampleInvoices);
+
+  redirect("/invoices");
+}
+
 export async function logout() {
+  const session = await getSession();
+  const isDemo = session?.isDemo;
+
   await deleteSession();
-  redirect("/login");
+
+  if (isDemo) {
+    redirect("/");
+  } else {
+    redirect("/login");
+  }
 }
 
 export async function getCurrentUser() {
