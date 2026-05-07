@@ -90,6 +90,10 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
+
+      <Link href="/" className={css.auth__home}>
+        ← Back to Home
+      </Link>
     </div>
   );
 }

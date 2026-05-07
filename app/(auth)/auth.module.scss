@@ -132,3 +132,16 @@
     color: var(--color-02);
   }
 }
+
+.auth__home {
+  margin-top: 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--subtext);
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--color-01);
+  }
+}

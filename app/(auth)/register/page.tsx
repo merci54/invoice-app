@@ -113,6 +113,10 @@ export default function RegisterPage() {
           </Link>
         </p>
       </div>
+
+      <Link href="/" className={css.auth__home}>
+        ← Back to Home
+      </Link>
     </div>
   );
 }
