@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Invoice App
+
+A full-stack invoice management application built with Next.js 16 and MongoDB. Create, edit, and track invoices with authentication, a one-click demo mode, and light/dark themes.
+
+## Features
+
+- **Authentication** — email/password sign up and login with JWT sessions stored in httpOnly cookies (bcrypt-hashed passwords)
+- **Invoice management** — create, edit, delete invoices with line items, automatic totals, and `Draft` / `Pending` / `Paid` statuses
+- **Status filtering** — filter the invoice list by status via URL search params
+- **Demo mode** — try the app instantly with a guest session pre-seeded with sample invoices, no signup required
+- **Profile dashboard** — invoice stats and revenue summary (total revenue, pending amount)
+- **Light / dark theme** — togglable, persisted client-side
+- **Route protection** — middleware guards authenticated routes and redirects logged-in users away from auth pages
+
+## Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org) (App Router, Server Actions) + React 19
+- **Language:** TypeScript
+- **Database:** MongoDB via [Mongoose](https://mongoosejs.com)
+- **Auth:** [jose](https://github.com/panva/jose) (JWT) + [bcryptjs](https://github.com/dcodeIO/bcrypt.js)
+- **Forms & validation:** [Formik](https://formik.org) + [Yup](https://github.com/jquense/yup)
+- **State:** [Zustand](https://github.com/pmndrs/zustand) (theme)
+- **Styling:** SCSS Modules
+- **UI helpers:** react-select, react-day-picker, react-hot-toast, date-fns
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+ (developed on Node 24)
+- A MongoDB connection string (e.g. [MongoDB Atlas](https://www.mongodb.com/atlas) or a local instance)
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure environment variables
+
+Create a `.env` file in the project root:
+
+```bash
+MONGO_URL=your-mongodb-connection-string
+JWT_SECRET=your-long-random-secret
+```
+
+> Generate a strong `JWT_SECRET`, for example: `openssl rand -base64 32`
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command         | Description                          |
+| --------------- | ------------------------------------ |
+| `npm run dev`   | Start the development server         |
+| `npm run build` | Build for production                 |
+| `npm run start` | Start the production server          |
+| `npm run lint`  | Run ESLint                           |
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  (auth)/            # Login & register pages
+  (main)/            # Authenticated app
+    invoices/        # List, create, view, edit, delete
+    profile/         # Profile & stats
+components/          # Reusable UI components
+lib/
+  actions/           # Server Actions (auth, invoices)
+  auth/              # Session helpers (JWT cookies)
+  db/                # MongoDB connection
+  models/            # Mongoose schemas
+  stores/            # Zustand stores
+types/               # Shared TypeScript types
+middleware.ts        # Route protection
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is for portfolio/learning purposes.
