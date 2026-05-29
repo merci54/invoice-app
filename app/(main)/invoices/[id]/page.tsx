@@ -7,6 +7,7 @@ import Link from 'next/link';
 import PaidButton from '@/components/PaidButton/PaidButton';
 import { formatDate, formatDueDate } from '@/lib/utils/date';
 import DeleteModalClient from './DeleteModalClient';
+import EditInvoiceButton from '@/components/EditInvoiceButton/EditInvoiceButton';
 import { getCurrentUser } from '@/lib/actions/auth';
 import { redirect } from 'next/navigation';
 
@@ -27,6 +28,9 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
 
   const isDeleteOpen = deleteParam === '1';
   if (!invoice) return <p>Not found</p>;
+
+  // Serialized copy for the client Edit button (which opens the edit drawer).
+  const invoiceData: InvoiceDB = JSON.parse(JSON.stringify(invoice));
 
   return (
     <main className={css.main}>
@@ -82,21 +86,39 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
 
             <span className={css.status__st}>{invoice.status}</span>
           </div>
+
+          {/* Tablet/desktop: actions live inside the status bar (right side). */}
+          <div className={css.statusActions}>
+            <EditInvoiceButton
+              invoice={invoiceData}
+              className={`${css.actionBtn} ${css.actionBtn__edit}`}
+            />
+            <Link
+              className={`${css.actionBtn} ${css.actionBtn__delete}`}
+              href={`/invoices/${id}?delete=1`}
+              scroll={false}
+            >
+              Delete
+            </Link>
+            <PaidButton invoiceId={id} />
+          </div>
         </div>
 
         <div className={css.content}>
-          <div className={css.content__titleBlock}>
-            <h2 className={css.title}>
-              <span className={css.text}>#</span>
-              {invoice?.invoiceNumber}
-            </h2>
-            <span className={css.text}>{invoice.projectDescription}</span>
-          </div>
-          <div className={css.content__billFrom}>
-            <p className={css.text}>{invoice.billFrom.street}</p>
-            <p className={css.text}>{invoice.billFrom.city}</p>
-            <p className={css.text}>{invoice.billFrom.postCode}</p>
-            <p className={css.text}>{invoice.billFrom.country}</p>
+          <div className={css.content__header}>
+            <div className={css.content__titleBlock}>
+              <h2 className={css.title}>
+                <span className={css.text}>#</span>
+                {invoice?.invoiceNumber}
+              </h2>
+              <span className={css.text}>{invoice.projectDescription}</span>
+            </div>
+            <div className={css.content__billFrom}>
+              <p className={css.text}>{invoice.billFrom.street}</p>
+              <p className={css.text}>{invoice.billFrom.city}</p>
+              <p className={css.text}>{invoice.billFrom.postCode}</p>
+              <p className={css.text}>{invoice.billFrom.country}</p>
+            </div>
           </div>
           <div className={css.content__info}>
             <div className={css.date}>
@@ -121,23 +143,32 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
                 <p className={css.text}>{invoice.billTo.country}</p>
               </div>
             </div>
-          </div>
-          <div className={css.content__sentTo}>
-            <p className={css.text}>Sent To</p>
-            <p className={css.title}>{invoice.clientEmail}</p>
+            <div className={css.content__sentTo}>
+              <p className={css.text}>Sent To</p>
+              <p className={css.title}>{invoice.clientEmail}</p>
+            </div>
           </div>
           <div className={css.amount}>
             <div className={css.amount__items}>
+              {/* Column headers — tablet/desktop only */}
+              <div className={css.amount__head}>
+                <span>Item Name</span>
+                <span className={css.amount__headQty}>QTY.</span>
+                <span className={css.amount__headPrice}>Price</span>
+                <span className={css.amount__headTotal}>Total</span>
+              </div>
               <ul className={css.amount__list}>
                 {invoice?.items.map(item => (
                   <li key={item.name + 's2b'} className={css.amount__item}>
-                    <div className={css.amount__desc}>
-                      <p className={css.title}>{item.name}</p>
-                      <p className={css.amount__itemPrice}>
-                        {item.quantity} x £ {item.price.toFixed(2)}
-                      </p>
-                    </div>
-                    <p className={css.amount__itemTotalPrice}>£ {item.total.toFixed(2)}</p>
+                    <p className={css.amount__name}>{item.name}</p>
+                    {/* mobile: combined "qty x price" line */}
+                    <p className={css.amount__mobilePrice}>
+                      {item.quantity} x £ {item.price.toFixed(2)}
+                    </p>
+                    {/* tablet/desktop: separate columns */}
+                    <p className={css.amount__qty}>{item.quantity}</p>
+                    <p className={css.amount__price}>£ {item.price.toFixed(2)}</p>
+                    <p className={css.amount__itemTotal}>£ {item.total.toFixed(2)}</p>
                   </li>
                 ))}
               </ul>
@@ -150,9 +181,10 @@ export default async function SingleInvoicePage({ params, searchParams }: Props)
         </div>
       </Container>
       <div className={css.buttonPanel}>
-        <Link className={`${css.buttonPanel__edit} ${css.button}`} href={`/invoices/${id}/edit`}>
-          Edit
-        </Link>
+        <EditInvoiceButton
+          invoice={invoiceData}
+          className={`${css.buttonPanel__edit} ${css.button}`}
+        />
         <Link
           className={`${css.buttonPanel__delete} ${css.button}`}
           href={`/invoices/${id}?delete=1`}

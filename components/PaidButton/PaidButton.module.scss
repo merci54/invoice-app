@@ -1,4 +1,5 @@
 @use '@/app/typography' as *;
+@use '@/app/breakpoints' as *;
 
 .button {
   text-align: center;
@@ -10,4 +11,16 @@
 
   color: #fff;
   background-color: var(--color-01);
+
+  // In the mobile bottom bar the button stretches (flex: 149); in the tablet/desktop
+  // status bar it becomes a natural-width pill with horizontal padding.
+  @include tablet {
+    flex: 0 0 auto;
+    padding: 16px 24px 15px;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    background-color: var(--color-02);
+  }
 }

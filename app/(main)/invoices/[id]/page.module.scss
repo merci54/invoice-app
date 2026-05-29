@@ -1,7 +1,16 @@
 @use '@/app/typography' as *;
+@use '@/app/breakpoints' as *;
 
 .main {
   padding-top: 32px;
+
+  @include tablet {
+    padding-top: 48px;
+  }
+
+  @include desktop {
+    padding-top: 72px;
+  }
 }
 
 .back {
@@ -10,6 +19,10 @@
   gap: 23px;
 
   margin-bottom: 31px;
+
+  @include tablet {
+    margin-bottom: 29px;
+  }
 
   &__link {
     @include Heading-S-2;
@@ -26,6 +39,14 @@
   background-color: var(--card-bg);
 
   margin-bottom: 16px;
+
+  // Tablet/desktop: Status + badge sit together on the left, actions on the right.
+  @include tablet {
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 20px 24px 20px 32px;
+    margin-bottom: 24px;
+  }
 
   &__text {
     @include Body-2;
@@ -63,6 +84,43 @@
   }
 }
 
+// Actions inside the status bar (tablet/desktop only — on mobile they live in .buttonPanel).
+.statusActions {
+  display: none;
+
+  @include tablet {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
+}
+
+.actionBtn {
+  padding: 16px 24px 15px;
+  border-radius: 24px;
+  text-align: center;
+  @include Heading-S-2;
+
+  &__edit {
+    color: var(--leftbtn-text);
+    background-color: var(--leftbtn-bg);
+
+    &:hover {
+      background-color: var(--color-05);
+    }
+  }
+
+  &__delete {
+    color: #fff;
+    background-color: var(--color-09);
+
+    &:hover {
+      background-color: #ff9797;
+    }
+  }
+}
+
 .content {
   border-radius: 8px;
   background-color: var(--card-bg);
@@ -76,16 +134,51 @@
     0px 20px 40px rgba(15, 23, 42, 0.08),
     0px 8px 16px rgba(15, 23, 42, 0.06);
 
-  &__billFrom {
+  @include tablet {
+    padding: 32px;
+  }
+
+  @include desktop {
+    padding: 48px;
+  }
+
+  // Top block: invoice id/description (left) + billFrom address (right) on tablet/desktop.
+  // `display: contents` on mobile keeps the two blocks stacked in the content column.
+  &__header {
+    display: contents;
+
+    @include tablet {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+    }
+  }
+
+  &__titleBlock {
     display: flex;
     flex-direction: column;
     gap: 3px;
   }
 
+  &__billFrom {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    @include tablet {
+      text-align: right;
+    }
+  }
+
   &__info {
     display: flex;
-    align-items: top;
+    align-items: flex-start;
     gap: 62px;
+
+    // 3 columns on tablet/desktop; wraps Sent To below on mobile.
+    flex-wrap: wrap;
+    row-gap: 32px;
   }
 
   &__sentTo {
@@ -93,7 +186,11 @@
     flex-direction: column;
     gap: 13px;
 
-    margin-bottom: 8px;
+    flex: 1 1 100%; // mobile: own row
+
+    @include tablet {
+      flex: 1 1 auto; // tablet/desktop: third column
+    }
   }
 }
 
@@ -153,29 +250,107 @@
   &__items {
     background-color: var(--items-bg);
     padding: 24px;
+
+    @include tablet {
+      padding: 32px;
+    }
   }
+
+  // Column header row — tablet/desktop only.
+  &__head {
+    display: none;
+
+    @include tablet {
+      display: grid;
+      grid-template-columns: 1fr 70px 120px 100px;
+      align-items: center;
+
+      margin-bottom: 32px;
+      color: var(--items-subtext);
+      @include Body;
+    }
+  }
+
+  &__headQty {
+    text-align: center;
+  }
+
+  &__headPrice,
+  &__headTotal {
+    text-align: right;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;
     gap: 24px;
-  }
-  &__item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  &__desc {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+
+    @include tablet {
+      gap: 32px;
+    }
   }
 
-  &__itemPrice {
+  // Each item: mobile = name + "qty x price" (left) / total (right);
+  // tablet/desktop = name | qty | price | total columns.
+  &__item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'name  total'
+      'price total';
+    align-items: center;
+    row-gap: 8px;
+
+    @include tablet {
+      grid-template-columns: 1fr 70px 120px 100px;
+      grid-template-areas: 'name qty price total';
+      row-gap: 0;
+    }
+  }
+
+  &__name {
+    grid-area: name;
+    @include Heading-S-2;
+    color: var(--text);
+  }
+
+  &__mobilePrice {
+    grid-area: price;
     @include Heading-S-2;
     color: var(--color-07);
+
+    @include tablet {
+      display: none;
+    }
   }
 
-  &__itemTotalPrice {
+  &__qty {
+    display: none;
+    grid-area: qty;
+
+    @include tablet {
+      display: block;
+      text-align: center;
+      @include Heading-S-2;
+      color: var(--color-07);
+    }
+  }
+
+  &__price {
+    display: none;
+    grid-area: price;
+
+    @include tablet {
+      display: block;
+      text-align: right;
+      @include Heading-S-2;
+      color: var(--color-07);
+    }
+  }
+
+  &__itemTotal {
+    grid-area: total;
+    text-align: right;
     @include Heading-S-2;
     color: var(--text);
   }
@@ -189,6 +364,10 @@
     align-items: center;
 
     color: #fff;
+
+    @include tablet {
+      padding: 26px 32px 22px 32px;
+    }
   }
 
   &__totalText {
@@ -215,6 +394,11 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
+
+  // On tablet/desktop the actions live in the status bar instead.
+  @include tablet {
+    display: none;
+  }
 
   &__edit {
     flex: 73;
