@@ -1,81 +1,153 @@
+@use '@/app/breakpoints' as *;
+
 .header {
-    background-color: #373B53;
-    height: 72px;
+  background-color: #373b53;
+  height: 72px;
+
+  @include tablet {
+    height: 80px;
+  }
+
+  // Desktop: top bar becomes a fixed vertical sidebar on the left.
+  @include desktop {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+
+    height: 100vh;
+    width: 103px;
+    border-radius: 0 20px 20px 0;
+  }
 }
 
 .wrapper {
-    display: flex;
-    justify-content: space-between;
-    padding-right: 24px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 24px;
+
+  // Stack logo (top) and menu (bottom); space-between is inherited from the base.
+  @include desktop {
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding: 0;
+  }
 }
 
 .logoBlock {
-    position: relative;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  height: 72px;
+  width: 72px;
+  background-color: var(--color-01);
+
+  border-radius: 0 20px 20px 0;
+  overflow: hidden;
+
+  @include tablet {
+    height: 80px;
+    width: 80px;
+  }
+
+  @include desktop {
+    height: 103px;
+    width: 103px;
+    // Both right corners rounded (top-right + bottom-right), per the design —
+    // the purple block curves into the dark sidebar below it. This matches the
+    // base radius, so no override of border-radius is needed here.
+    border-radius: 0 20px 20px 0;
+  }
+
+  // Lighter-purple "fold": the bottom half. Corners rounded on the diagonal —
+  // top-left and bottom-right only (top-right and bottom-left stay sharp).
+  // Percentages keep it pixel-correct at every size (72 / 80 / 103px).
+  &__mask {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+
+    background-color: var(--color-02);
+    border-radius: 20px 0 20px 0;
+  }
+
+  // White mark scales with the block (≈40px on the 103px desktop logo).
+  &__img {
+    z-index: 1;
+    width: 38.8%;
+    height: auto;
+  }
+}
+
+.menuBlock {
+  position: relative;
+  display: flex;
+  align-self: center;
+  gap: 49px;
+
+  padding: 20px 0;
+
+  // Desktop: stack theme toggle over avatar at the bottom of the sidebar.
+  @include desktop {
+    flex-direction: column;
+    align-items: center;
+    gap: 27px;
+    padding: 0 0 24px;
+  }
+
+  &__themeIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::after {
+      position: absolute;
+      content: '';
+      height: 100%;
+      width: 1px;
+      background-color: #494e6e;
+
+      left: calc(20 + 24);
+      top: 0;
+
+      // Desktop: the divider rotates to a horizontal line spanning the sidebar.
+      @include desktop {
+        height: 1px;
+        width: 103px;
+        left: 50%;
+        top: auto;
+        bottom: -13px;
+        transform: translateX(-50%);
+      }
+    }
+  }
+
+  &__userIcon {
     display: flex;
     justify-content: center;
     align-items: center;
 
     cursor: pointer;
 
-    height: 72px;
-    width: 72px;
-    background-color: var(--color-01);
-
-    border-radius: 0 20px 20px 0;
+    border-radius: 50%;
     overflow: hidden;
 
-    &__mask {
-        position: absolute;
-        width: 72px;
-        height: calc(72 - 36.25);
+    @include desktop {
+      width: 40px;
+      height: 40px;
 
-        background-color: var(--color-02);
-
-        border-radius: 20px 0 20px 0;
-        top: 36.35px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
-
-    &__img {
-        z-index: 1;
-    }
-}
-
-.menuBlock {
-    position: relative;
-    display: flex;
-    align-self: center;
-    gap: 49px;
-
-    padding: 20px 0;
-
-    &__themeIcon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-
-        &::after {
-            position: absolute;
-            content: '';
-            height: 100%;
-            width: 1px;
-            background-color: #494E6E;
-
-            left: calc(20 + 24);
-            top: 0;
-        }
-
-    }
-
-    &__userIcon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        cursor: pointer;
-
-        border-radius: 50%;
-        overflow: hidden;
-    }
-
+  }
 }
