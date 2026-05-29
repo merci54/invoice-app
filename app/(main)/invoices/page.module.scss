@@ -1,7 +1,16 @@
 @use '@/app/typography' as *;
+@use '@/app/breakpoints' as *;
 
 .main {
   padding: 32px 0 105px 0;
+
+  @include tablet {
+    padding: 56px 0 80px;
+  }
+
+  @include desktop {
+    padding: 72px 0 80px;
+  }
 }
 
 .invoices {
@@ -53,6 +62,20 @@
 
   color: #fff;
   @include Heading-S-2;
+
+  // "New" on mobile → "New Invoice" on tablet/desktop (button grows to fit).
+  @include tablet {
+    width: auto;
+    padding-right: 15px;
+  }
+
+  &__label {
+    display: none;
+
+    @include tablet {
+      display: inline;
+    }
+  }
 
   &__icon {
     display: flex;

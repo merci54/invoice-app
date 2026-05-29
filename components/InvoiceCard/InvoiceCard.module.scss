@@ -1,4 +1,5 @@
 @use '@/app/typography' as *;
+@use '@/app/breakpoints' as *;
 
 .invoice {
   display: flex;
@@ -10,14 +11,39 @@
   border-radius: 8px;
   min-height: 134px;
 
+  // Tablet/desktop: collapse the two-row card into a single horizontal row.
+  // The wrapper groups become `display: contents` so #id, date, name, sum,
+  // status and chevron all participate directly in this flex row, then `order`
+  // arranges them: #id · date · name · amount · status · chevron.
+  @include tablet {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    min-height: 72px;
+    padding: 0 24px;
+  }
+
+  @include desktop {
+    padding: 0 24px 0 32px;
+  }
+
   &__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include tablet {
+      display: contents;
+    }
   }
 
   &__id {
     @include Heading-S-2;
+
+    @include tablet {
+      order: 1;
+    }
   }
 
   &__hash {
@@ -27,12 +53,33 @@
   &__name {
     @include Body-2;
     color: var(--card-name);
+
+    @include tablet {
+      order: 3;
+      flex: 1 1 auto;
+      margin-left: 28px;
+    }
   }
 
   &__low {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include tablet {
+      display: contents;
+    }
+  }
+
+  &__chevron {
+    display: none;
+
+    @include tablet {
+      display: block;
+      order: 6;
+      margin-left: 20px;
+      flex: 0 0 auto;
+    }
   }
 }
 
@@ -41,13 +88,31 @@
   flex-direction: column;
   gap: 9px;
 
+  @include tablet {
+    display: contents;
+  }
+
   &__date {
     color: var(--subtext);
     @include Body-2;
+
+    @include tablet {
+      order: 2;
+      margin-left: 12px;
+      white-space: nowrap;
+    }
   }
 
   &__sum {
     @include Heading-S-2;
+
+    @include tablet {
+      order: 4;
+      margin-left: auto;
+      min-width: 100px;
+      text-align: right;
+      white-space: nowrap;
+    }
   }
 }
 
@@ -59,6 +124,15 @@
 
   @include Heading-S-2;
   border-radius: 6px;
+
+  @include tablet {
+    order: 5;
+    flex: 0 0 auto;
+    justify-content: center;
+    margin-left: 40px;
+    min-width: 104px;
+    padding: 13px 0 12px;
+  }
 
   &__paid {
     background-color: var(--paid-bg);

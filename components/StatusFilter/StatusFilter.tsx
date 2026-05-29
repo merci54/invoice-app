@@ -48,7 +48,9 @@ export default function StatusFilter() {
   return (
     <div className={css.filter} ref={ref}>
       <button className={css.filter__button} onClick={() => setOpen(!open)}>
-        <p className={css.filter__text}>Filter</p>
+        <p className={css.filter__text}>
+          Filter<span className={css.filter__rest}> by status</span>
+        </p>
         <svg
           className={`${css.filter__icon} ${open ? css.filter__iconOpen : ''}`}
           width="10"

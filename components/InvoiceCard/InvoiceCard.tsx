@@ -45,6 +45,19 @@ export default function InvoiceCard({ invoiceNumber, name, date, sum, status }: 
           <span className={css.status__text}>{status}</span>
         </div>
       </div>
+
+      {/* Chevron — only shown on tablet/desktop single-row layout */}
+      <svg
+        className={css.invoice__chevron}
+        width="7"
+        height="10"
+        viewBox="0 0 7 10"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path d="M1 1L5 5L1 9" stroke="#7C5DFA" strokeWidth="2" />
+      </svg>
     </li>
   );
 }

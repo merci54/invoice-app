@@ -1,13 +1,12 @@
 import Container from '@/components/Container/Container';
 import css from './page.module.scss';
-import Image from 'next/image';
+import NewInvoiceButton from '@/components/NewInvoiceButton/NewInvoiceButton';
 import InvoicesList from '@/components/InvoicesList/InvoicesList';
 import { connectMongoDB } from '@/lib/db/connectMongoDB';
 import { Invoice } from '@/lib/models/invoice';
 import NothingPage from '@/components/NothingPage/NothingPage';
 import { Invoice as InvoiceDB, InvoiceStatus } from '@/types/invoice';
 import { formatDate } from '@/lib/utils/date';
-import Link from 'next/link';
 import { getCurrentUser } from '@/lib/actions/auth';
 import { redirect } from 'next/navigation';
 import StatusFilter from '@/components/StatusFilter/StatusFilter';
@@ -67,12 +66,13 @@ export default async function InvoicesPage({ searchParams }: Props) {
 
             <div className={css.invoices__actions}>
               <StatusFilter />
-              <Link href={'/invoices/create'} className={css.newInvoice}>
-                <div className={css.newInvoice__icon}>
-                  <Image src={'/icons/plus.svg'} alt="plus icon" width={10} height={10} />
-                </div>
-                New
-              </Link>
+              <NewInvoiceButton
+                classes={{
+                  root: css.newInvoice,
+                  icon: css.newInvoice__icon,
+                  label: css.newInvoice__label,
+                }}
+              />
             </div>
           </div>
 

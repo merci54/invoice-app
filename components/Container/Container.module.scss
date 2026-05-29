@@ -1,4 +1,13 @@
+@use '@/app/breakpoints' as *;
+
 .container {
   margin: 0 auto;
-    padding: 0 24px;
+  padding: 0 24px;
+
+  // Tablet & desktop: cap inner content at 730px, centered in the viewport.
+  // 826 - (48 * 2) = 730 inner; at the 768 breakpoint this yields 672 (matches Figma).
+  @include tablet {
+    max-width: 826px;
+    padding: 0 48px;
+  }
 }

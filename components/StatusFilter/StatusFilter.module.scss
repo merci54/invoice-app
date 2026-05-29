@@ -1,7 +1,16 @@
 @use '@/app/typography' as *;
+@use '@/app/breakpoints' as *;
 
 .filter {
   position: relative;
+
+  &__rest {
+    display: none;
+
+    @include tablet {
+      display: inline;
+    }
+  }
 
   &__button {
     display: flex;
