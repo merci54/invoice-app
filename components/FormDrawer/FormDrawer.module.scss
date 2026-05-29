@@ -1,0 +1,51 @@
+@use '@/app/breakpoints' as *;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90; // below the desktop sidebar (z-index 100) so it stays visible on top
+
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.3s ease;
+}
+
+.open {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  background-color: var(--bg);
+  overflow-y: auto;
+
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+
+  padding: 32px 24px;
+
+  // Tablet: 616px panel that slides in below the 80px top bar.
+  @include tablet {
+    top: 80px;
+    height: calc(100% - 80px);
+    width: 616px;
+    border-radius: 0 20px 20px 0;
+    padding: 56px;
+  }
+
+  // Desktop: 719px panel; left padding clears the fixed 103px sidebar.
+  @include desktop {
+    top: 0;
+    height: 100%;
+    width: 719px;
+    padding: 56px 56px 32px calc(103px + 56px);
+  }
+}
+
+.open .drawer {
+  transform: translateX(0);
+}

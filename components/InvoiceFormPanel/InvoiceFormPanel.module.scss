@@ -1,0 +1,85 @@
+@use '@/app/typography' as *;
+@use '@/app/breakpoints' as *;
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  margin-bottom: 24px;
+
+  // The drawer (tablet+) closes via the scrim / buttons, so no back link there.
+  @include tablet {
+    display: none;
+  }
+
+  &__link {
+    @include Heading-S-2;
+  }
+}
+
+.title {
+  margin-bottom: 22px;
+  @include Heading-M;
+
+  &__hash {
+    color: var(--hash);
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 48px;
+
+  @include tablet {
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+}
+
+.btn {
+  flex: 1;
+  padding: 18px 6px 15px;
+  border-radius: 24px;
+  text-align: center;
+  white-space: nowrap;
+  @include Heading-S-2;
+
+  @include tablet {
+    flex: 0 0 auto;
+    padding: 18px 24px 15px;
+  }
+
+  &__discard {
+    color: var(--leftbtn-text);
+    background-color: var(--leftbtn-bg);
+
+    // Discard/Cancel sits left; the save buttons get pushed to the right edge.
+    @include tablet {
+      margin-right: auto;
+    }
+
+    &:hover {
+      background-color: var(--color-05);
+    }
+  }
+
+  &__draft {
+    color: var(--subtext);
+    background-color: #373b53;
+
+    &:hover {
+      background-color: #292c44;
+    }
+  }
+
+  &__save {
+    color: #fff;
+    background-color: var(--color-01);
+
+    &:hover {
+      background-color: var(--color-02);
+    }
+  }
+}

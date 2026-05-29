@@ -1,5 +1,6 @@
 import Header from '@/components/Header/Header';
 import DemoBanner from '@/components/DemoBanner/DemoBanner';
+import FormDrawerHost from '@/components/FormDrawer/FormDrawerHost';
 import { getSession } from '@/lib/auth/session';
 
 export default async function MainLayout({
@@ -15,6 +16,7 @@ export default async function MainLayout({
       <Header />
       {isDemo && <DemoBanner />}
       {children}
+      <FormDrawerHost />
     </div>
   );
 }

@@ -65,4 +65,5 @@ export async function editInvoice(invoiceId: string, updatedInvoice: CreateInvoi
   );
 
   revalidatePath('/invoices');
+  revalidatePath(`/invoices/${invoiceId}`);
 }
