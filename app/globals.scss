@@ -94,11 +94,8 @@ body {
 
 .app-wrapper {
   background-color: var(--bg);
-  max-width: 480px;
   min-height: 100vh;
-  margin: 0 auto;
   position: relative;
-  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.5), 4px 0 16px rgba(0, 0, 0, 0.5);
 }
 
 * {
