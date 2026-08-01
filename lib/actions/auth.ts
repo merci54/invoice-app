@@ -7,7 +7,6 @@ import { createSession, deleteSession, getSession } from "@/lib/auth/session";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import mongoose from "mongoose";
-import { after } from "next/server";
 
 export interface AuthResult {
   error?: string;
@@ -73,15 +72,6 @@ export async function loginAsDemo() {
   const demoObjectId = new mongoose.Types.ObjectId();
   const demoUserId = demoObjectId.toString();
 
-  // Session creation doesn't need DB — run independently
-  await createSession({
-    userId: demoUserId,
-    name: "Demo User",
-    email: "demo@example.com",
-    isDemo: true,
-  });
-
-  // Seed invoices in the background after response is sent
   const now = new Date();
 
   // Generate unique invoice numbers for this demo session
@@ -180,10 +170,26 @@ export async function loginAsDemo() {
     },
   ];
 
-  after(async () => {
+  // Seeding must finish before the redirect — /invoices queries Mongo on every
+  // request, so redirecting early renders an empty list until the user reloads.
+  const seeding = (async () => {
     await connectMongoDB();
-    await Invoice.insertMany(sampleInvoices);
+    await Invoice.insertMany(sampleInvoices, { ordered: false });
+  })().catch((error) => {
+    // A duplicate invoiceNumber shouldn't lock the user out of the demo
+    console.error("⚠️ Demo seeding failed:", error);
   });
+
+  // Session creation doesn't touch the DB, so run it alongside the seeding
+  await Promise.all([
+    seeding,
+    createSession({
+      userId: demoUserId,
+      name: "Demo User",
+      email: "demo@example.com",
+      isDemo: true,
+    }),
+  ]);
 
   redirect("/invoices");
 }
